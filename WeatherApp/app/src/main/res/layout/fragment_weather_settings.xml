@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#E3F2FD">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Parametry Prognozy"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_marginBottom="8dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Liczba dni (1-16): "/>
+
+        <EditText
+            android:id="@+id/et_days"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:text="1"
+            android:gravity="center"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Wybierz dane do wyświetlenia:"
+        android:textStyle="italic"
+        android:layout_marginBottom="5dp"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="#FFFFFF"
+        android:padding="5dp">
+
+        <LinearLayout
+            android:id="@+id/checkbox_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <CheckBox
+                android:id="@+id/cb_temp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Temperatura (2m)"
+                android:checked="true"/>
+
+            <CheckBox
+                android:id="@+id/cb_humidity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Wilgotność" />
+
+            <CheckBox
+                android:id="@+id/cb_apparent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Temp. odczuwalna" />
+
+            <CheckBox
+                android:id="@+id/cb_precip_prob"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Prawdopodobieństwo opadów" />
+
+            <CheckBox
+                android:id="@+id/cb_precip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Opady (suma)" />
+
+            <CheckBox
+                android:id="@+id/cb_rain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Deszcz" />
+
+            <CheckBox
+                android:id="@+id/cb_snow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Opady śniegu" />
+
+            <CheckBox
+                android:id="@+id/cb_pressure"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ciśnienie" />
+
+            <CheckBox
+                android:id="@+id/cb_cloud"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Zachmurzenie" />
+
+            <CheckBox
+                android:id="@+id/cb_visibility"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Widoczność" />
+
+            <CheckBox
+                android:id="@+id/cb_wind"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Prędkość wiatru" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btn_apply"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Aktualizuj Wykres"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="#2196F3"/>
+
+</LinearLayout>
