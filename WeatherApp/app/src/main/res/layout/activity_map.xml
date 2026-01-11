@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Wybierz miejsce klikając na mapę"
+        android:textAlignment="center"
+        android:padding="12dp"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:background="#E0E0E0"/>
+
+    <org.osmdroid.views.MapView
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="#FFFFFF"
+        android:elevation="8dp">
+
+        <TextView
+            android:id="@+id/tvSelectedInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nie wybrano miejsca"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/btnConfirmLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ZATWIERDŹ WYBÓR"
+            android:enabled="false"/> </LinearLayout>
+
+</LinearLayout>
