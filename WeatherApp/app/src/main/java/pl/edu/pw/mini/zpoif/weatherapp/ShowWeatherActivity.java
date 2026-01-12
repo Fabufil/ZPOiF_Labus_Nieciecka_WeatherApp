@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +27,8 @@ public class ShowWeatherActivity extends AppCompatActivity implements OnWeatherS
 
     private TextView tvCurrentWeather;
     private LineChart chart;
+    private TextView tvWarnings;
+
 
     private double latitude;
     private double longitude;
@@ -36,6 +39,7 @@ public class ShowWeatherActivity extends AppCompatActivity implements OnWeatherS
         setContentView(R.layout.activity_show_weather);
 
         tvCurrentWeather = findViewById(R.id.tv_current_weather);
+        tvWarnings = findViewById(R.id.tv_warnings);
         chart = findViewById(R.id.weather_chart);
 
         // Odbieramy dane z main
@@ -58,6 +62,7 @@ public class ShowWeatherActivity extends AppCompatActivity implements OnWeatherS
         Handler handler = new Handler(Looper.getMainLooper());
 
         tvCurrentWeather.setText("Pobieranie danych...");
+        tvWarnings.setVisibility(View.GONE);
 
         executor.execute(() -> {
             try {
@@ -72,6 +77,7 @@ public class ShowWeatherActivity extends AppCompatActivity implements OnWeatherS
                     if (!data.isEmpty()) {
                         updateCurrentWeatherText(data.get(0));
                         updateChart(data, options);
+                        checkAndShowWarnings(data);
                     } else {
                         tvCurrentWeather.setText("Brak danych.");
                         chart.clear();
@@ -83,6 +89,21 @@ public class ShowWeatherActivity extends AppCompatActivity implements OnWeatherS
                 handler.post(() -> Toast.makeText(this, "Błąd: " + e.getMessage(), Toast.LENGTH_LONG).show());
             }
         });
+    }
+    // obsługa ostrzeżeń
+    private void checkAndShowWarnings(List<WeatherDataPoint> data) {
+        List<String> warnings = WarningGenerator.generateWarnings(data);
+
+        if (!warnings.isEmpty()) {
+            StringBuilder sb = new StringBuilder();
+            for (String w : warnings) {
+                sb.append(w).append("\n");
+            }
+            tvWarnings.setText(sb.toString().trim());
+            tvWarnings.setVisibility(View.VISIBLE);
+        } else {
+            tvWarnings.setVisibility(View.GONE);
+        }
     }
 
     private void updateCurrentWeatherText(WeatherDataPoint current) {

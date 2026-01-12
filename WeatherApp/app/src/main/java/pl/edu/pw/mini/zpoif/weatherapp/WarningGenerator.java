@@ -5,47 +5,76 @@ import java.util.List;
 
 public class WarningGenerator {
 
-    /**
-     * Metoda analizuje dane i zwraca listę ostrzeżeń.
-     * Analizujemy najbliższe 24 godziny.
-     */
-    public static List<String> generujOstrzezenia(List<Double> temperatures, List<Double> rain, List<Double> windSpeed) {
-        List<String> ostrzezenia = new ArrayList<>();
+    public static List<String> generateWarnings(List<WeatherDataPoint> data) {
+        List<String> warnings = new ArrayList<>();
+
         boolean isFreezing = false;
         boolean isSlippery = false;
         boolean isWindy = false;
         boolean isHot = false;
+        boolean isStormy = false;
+        boolean isSnowing = false;
+        boolean isRaining = false;
+        boolean isLowPressure = false;
+        boolean isFoggy = false;
 
-        // Sprawdzamy 24h
-        int count = Math.min(temperatures.size(), 24);
+
+        // Analizujemy pierwsze 24h
+        int count = Math.min(data.size(), 24);
 
         for (int i = 0; i < count; i++) {
-            double t = temperatures.get(i);
-
-            // Pobieramy deszcz i wiatr
-            double r = (rain != null && i < rain.size()) ? rain.get(i) : 0.0;
-            double w = (windSpeed != null && i < windSpeed.size()) ? windSpeed.get(i) : 0.0;
+            WeatherDataPoint point = data.get(i);
 
             // 1. upał
-            if (t > 30.0) isHot = true;
+            if (point.temperature > 30.0) isHot = true;
 
             // 2. mróz
-            if (t < -10.0) isFreezing = true;
+            if (point.temperature < -10.0) isFreezing = true;
 
             // 3. ślisko
-            if (t <= 2.0 && t >= -3.0 && r > 0.0) {
+            if (point.temperature <= 2.0 && point.temperature >= -3.0 && point.rain > 0.0) {
                 isSlippery = true;
             }
 
-            // 4. silny wiat
-            if (w > 25.0) isWindy = true;
+            // 4. silny wiatr
+            if (point.windSpeed > 25.0) isWindy = true;
+
+            // 5. burza
+            if (point.rain > 2.0 || (point.visibility < 200 && point.visibility > 0)) {
+                isStormy = true;
+            }
+
+            // 6. śnieżyca
+            if (point.snowfall > 0.5) {
+                isSnowing = true;
+            }
+
+            // 7. deszcz
+            if (point.precipitationProbability > 80) {
+                isRaining = true;
+            }
+
+            // 8. spadek cisnienia
+            if (point.surfacePressure < 990.0) {
+                isLowPressure = true;
+            }
+
+            // 9. mgła
+            if (point.visibility < 300.0 && point.windSpeed < 10.0) {
+                isFoggy = true;
+            }
+
         }
 
-        if (isSlippery) ostrzezenia.add("UWAGA: Może być ślisko! (Gołoledź)");
-        if (isWindy) ostrzezenia.add("UWAGA: Silny wiatr!");
-        if (isFreezing) ostrzezenia.add("UWAGA: Bardzo niskie temperatury!");
-        if (isHot) ostrzezenia.add("UWAGA: Bardzo wysokie temperatury!");
-
-        return ostrzezenia;
+        if (isSlippery) warnings.add(" UWAGA: Może być ślisko!");
+        if (isWindy) warnings.add("UWAGA: Silny wiatr!");
+        if (isFreezing) warnings.add("UWAGA: Bardzo niskie temperatury!");
+        if (isHot) warnings.add("UWAGA: Upał!");
+        if (isStormy) warnings.add("UWAGA: Trudne warunki (ulewa/mgła)!");
+        if (isSnowing) warnings.add("UWAGA: Opady śniegu!");
+        if (isRaining) warnings.add("UWAGA: Opady deszczu - weż parasol!");
+        if (isLowPressure) warnings.add("UWAGA: Spadek cisnienia!");
+        if (isFoggy) warnings.add("UWAGA: Mgla!");
+        return warnings;
     }
 }
