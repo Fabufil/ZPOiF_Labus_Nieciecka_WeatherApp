@@ -2,69 +2,102 @@ package pl.edu.pw.mini.zpoif.weatherapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.os.Handler;
+import android.os.Looper;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity {
 
-    private EditText etLat;
-    private EditText etLon;
-    private Button btnOpenWeather;
+    private EditText etCityName;
+    private Button btnSearchCity;
+    private Button btnOpenMap;
+    private Button btnOpenCompare;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        View mainView = findViewById(R.id.main);
-        if (mainView != null) {
-            ViewCompat.setOnApplyWindowInsetsListener(mainView, (v, insets) -> {
-                Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-                v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-                return insets;
-            });
-        }
 
-        etLat = findViewById(R.id.et_lat);
-        etLon = findViewById(R.id.et_lon);
-        btnOpenWeather = findViewById(R.id.btn_open_weather);
+        etCityName = findViewById(R.id.etCityName);
+        btnSearchCity = findViewById(R.id.btnSearchCity);
+        btnOpenMap = findViewById(R.id.btnOpenMap);
+        btnOpenCompare = findViewById(R.id.btnOpenCompare);
 
-        btnOpenWeather.setOnClickListener(v -> {
-            openWeatherActivity();
+        // 1. Logika szukania po nazwie miasta
+        btnSearchCity.setOnClickListener(v -> {
+            String city = etCityName.getText().toString().trim();
+            if (!city.isEmpty()) {
+                searchCityAndShowWeather(city);
+            } else {
+                Toast.makeText(this, "Wpisz nazwę miasta!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // 2. Przejście do mapy
+        btnOpenMap.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, MapActivity.class);
+            startActivity(intent);
+        });
+
+        // 3. Przejście do porównywarki
+        btnOpenCompare.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, CompareWeatherActivity.class);
+            startActivity(intent);
         });
     }
 
-    private void openWeatherActivity() {
-        String latStr = etLat.getText().toString();
-        String lonStr = etLon.getText().toString();
+    private void searchCityAndShowWeather(String cityName) {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        Handler handler = new Handler(Looper.getMainLooper());
 
-        if (latStr.isEmpty() || lonStr.isEmpty()) {
-            Toast.makeText(this, "Wpisz obie współrzędne!", Toast.LENGTH_SHORT).show();
-            return;
-        }
+        btnSearchCity.setEnabled(false);
+        btnSearchCity.setText("Szukam...");
 
-        try {
-            double lat = Double.parseDouble(latStr);
-            double lon = Double.parseDouble(lonStr);
+        executor.execute(() -> {
+            try {
+                // Pobieramy string postaci "latitude=XX.XX&longitude=YY.YY"
+                String coordsQuery = WeatherGetter.getCoordinates(cityName);
 
-            Intent intent = new Intent(MainActivity.this, ShowWeatherActivity.class);
+                // Musimy to sparsować, bo ShowWeatherActivity oczekuje double
+                double lat = 0;
+                double lon = 0;
 
-            // Przekazujemy koordynaty do nowej activity
-            intent.putExtra("LATITUDE", lat);
-            intent.putExtra("LONGITUDE", lon);
-            startActivity(intent);
+                String[] parts = coordsQuery.split("&");
+                for (String part : parts) {
+                    String[] kv = part.split("=");
+                    if (kv[0].equals("latitude")) lat = Double.parseDouble(kv[1]);
+                    if (kv[0].equals("longitude")) lon = Double.parseDouble(kv[1]);
+                }
 
-        } catch (NumberFormatException e) {
-            Toast.makeText(this, "Podano nieprawidłowe liczby!", Toast.LENGTH_SHORT).show();
-        }
+                double finalLat = lat;
+                double finalLon = lon;
+
+                handler.post(() -> {
+                    btnSearchCity.setEnabled(true);
+                    btnSearchCity.setText("SPRAWDŹ POGODĘ");
+
+                    // Uruchamiamy ShowWeatherActivity
+                    Intent intent = new Intent(MainActivity.this, ShowWeatherActivity.class);
+                    intent.putExtra("LATITUDE", finalLat);
+                    intent.putExtra("LONGITUDE", finalLon);
+                    startActivity(intent);
+                });
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                handler.post(() -> {
+                    btnSearchCity.setEnabled(true);
+                    btnSearchCity.setText("SPRAWDŹ POGODĘ");
+                    Toast.makeText(MainActivity.this, "Błąd: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+            }
+        });
     }
 }

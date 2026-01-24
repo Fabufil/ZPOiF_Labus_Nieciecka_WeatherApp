@@ -1,63 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
-    tools:context=".MainActivity">
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center_vertical"
+    android:background="#F5F5F5">
 
     <TextView
-        android:id="@+id/tv_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Wybierz Lokalizację"
-        android:textSize="24sp"
+        android:text="Aplikacja Pogodowa"
+        android:textSize="28sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/et_lat"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed" />
+        android:textColor="#333333"
+        android:layout_marginBottom="40dp"
+        android:layout_gravity="center"/>
 
-    <EditText
-        android:id="@+id/et_lat"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:hint="Szerokość geograficzna (Latitude)"
-        android:inputType="numberDecimal|numberSigned"
-        android:text="52.23"
-        app:layout_constraintBottom_toTopOf="@+id/et_lon"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_header" />
+        android:elevation="4dp"
+        android:layout_marginBottom="20dp">
 
-    <EditText
-        android:id="@+id/et_lon"
-        android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sprawdź konkretne miasto"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"/>
+
+            <EditText
+                android:id="@+id/etCityName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="np. Warszawa"
+                android:inputType="textCapWords"/>
+
+            <Button
+                android:id="@+id/btnSearchCity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sprawdź pogodę"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#4CAF50"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:hint="Długość geograficzna (Longitude)"
-        android:inputType="numberDecimal|numberSigned"
-        android:text="21.01"
-        app:layout_constraintBottom_toTopOf="@+id/btn_open_weather"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_lat" />
+        android:text="lub wybierz inną opcję"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dp"
+        android:textColor="#777"/>
 
     <Button
-        android:id="@+id/btn_open_weather"
+        android:id="@+id/btnOpenMap"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Sprawdź pogodę"
-        android:backgroundTint="#2196F3"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_lon" />
+        android:layout_height="60dp"
+        android:text="🗺️ Wybierz na mapie"
+        android:textSize="16sp"
+        android:layout_marginBottom="12dp"
+        android:backgroundTint="#2196F3"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <Button
+        android:id="@+id/btnOpenCompare"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="⚖️ Porównaj dwa miasta"
+        android:textSize="16sp"
+        android:backgroundTint="#FF9800"/>
+
+</LinearLayout>

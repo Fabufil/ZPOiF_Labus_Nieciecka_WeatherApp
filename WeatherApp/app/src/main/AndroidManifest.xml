@@ -13,18 +13,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WeatherApp">
+
         <activity
-            android:name=".ShowWeatherActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MapActivity"
-            android:exported="true">
+            android:name=".MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.WeatherApp">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".MapActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ShowWeatherActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".CompareWeatherActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

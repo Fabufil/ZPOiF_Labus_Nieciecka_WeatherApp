@@ -69,7 +69,7 @@ public class WeatherSettingsFragment extends Fragment {
                 selectedOptions.put(entry.getKey(), entry.getValue().isChecked());
             }
 
-           
+
             listener.onSettingsChanged(days, selectedOptions);
         });
 
