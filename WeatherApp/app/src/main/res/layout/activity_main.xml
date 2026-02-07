@@ -3,19 +3,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="24dp"
-    android:gravity="center_vertical"
-    android:background="#F5F5F5">
+    android:paddingStart="12dp"
+    android:paddingEnd="12dp"
+    android:paddingBottom="24dp"
+    android:paddingTop="50dp"
+    android:gravity="center_horizontal"
+    android:background="#F4EDEA">
+
+    <ImageView
+        android:id="@+id/ivLogo"
+        android:layout_width="158dp"
+        android:layout_height="161dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="24dp"
+        android:contentDescription="Logo aplikacji"
+        android:src="@drawable/tenczabezbg" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Aplikacja Pogodowa"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        android:textColor="#333333"
+        android:layout_gravity="center"
         android:layout_marginBottom="40dp"
-        android:layout_gravity="center"/>
+        android:text="Sprawdź pogodę"
+        android:textColor="#12263A"
+        android:textSize="28sp"
+        android:textStyle="bold" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -27,13 +39,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="16dp"
+            android:background="#C5D8D1">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Sprawdź konkretne miasto"
                 android:textStyle="bold"
+                android:textColor="#12263A"
                 android:layout_marginBottom="8dp"/>
 
             <EditText
@@ -49,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:text="Sprawdź pogodę"
                 android:layout_marginTop="10dp"
-                android:backgroundTint="#4CAF50"/>
+                android:backgroundTint="#06BCC1"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -59,23 +73,23 @@
         android:text="lub wybierz inną opcję"
         android:layout_gravity="center"
         android:layout_marginBottom="10dp"
-        android:textColor="#777"/>
+        android:textColor="#897C80"/>
 
     <Button
         android:id="@+id/btnOpenMap"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:text="🗺️ Wybierz na mapie"
+        android:text="Wybierz na mapie"
         android:textSize="16sp"
         android:layout_marginBottom="12dp"
-        android:backgroundTint="#2196F3"/>
+        android:backgroundTint="#9C89B8"/>
 
     <Button
         android:id="@+id/btnOpenCompare"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:text="⚖️ Porównaj dwa miasta"
+        android:text="Porównaj dwa miasta"
         android:textSize="16sp"
-        android:backgroundTint="#FF9800"/>
+        android:backgroundTint="#9C89B8"/>
 
 </LinearLayout>

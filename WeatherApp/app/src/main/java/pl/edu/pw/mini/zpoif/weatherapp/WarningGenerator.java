@@ -72,7 +72,7 @@ public class WarningGenerator {
         if (isHot) warnings.add("UWAGA: Upał!");
         if (isStormy) warnings.add("UWAGA: Trudne warunki (ulewa/mgła)!");
         if (isSnowing) warnings.add("UWAGA: Opady śniegu!");
-        if (isRaining) warnings.add("UWAGA: Opady deszczu - weż parasol!");
+        if (isRaining) warnings.add("UWAGA: Opady deszczu - weź parasol!");
         if (isLowPressure) warnings.add("UWAGA: Spadek cisnienia!");
         if (isFoggy) warnings.add("UWAGA: Mgla!");
         return warnings;

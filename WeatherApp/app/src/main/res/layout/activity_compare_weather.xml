@@ -2,7 +2,11 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:paddingStart="24dp"
+    android:paddingEnd="24dp"
+    android:paddingBottom="24dp"
+    android:paddingTop="80dp"
+    android:background="#F4EDEA">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,11 +16,12 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Porównywarka"
-            android:textSize="24sp"
-            android:textStyle="bold"
             android:layout_marginBottom="16dp"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:text="Porównywarka"
+            android:textColor="#12263A"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -43,16 +48,17 @@
             android:id="@+id/btnSelectParams"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Wybierz parametry do porównania"
             android:layout_marginTop="8dp"
-            android:backgroundTint="#607D8B"/>
+            android:backgroundTint="#06BCC1"
+            android:text="Wybierz parametry do porównania" />
 
         <Button
             android:id="@+id/btnCompare"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="PORÓWNAJ"
-            android:layout_marginTop="8dp"/>
+            android:layout_marginTop="8dp"
+            android:backgroundTint="#9C89B8"/>
 
         <LinearLayout
             android:id="@+id/resultsContainer"

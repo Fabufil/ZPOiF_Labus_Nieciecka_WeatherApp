@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,11 +31,21 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import android.content.ContentValues;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
+import android.provider.MediaStore;
+import java.io.OutputStream;
+import java.io.IOException;
+
 public class ShowWeatherActivity extends AppCompatActivity implements OnWeatherSettingsListener {
 
     private TextView tvCurrentWeather;
     private LineChart chart;
     private TextView tvWarnings;
+    private Button btnSaveChart;
 
     private double latitude;
     private double longitude;
@@ -50,11 +61,20 @@ public class ShowWeatherActivity extends AppCompatActivity implements OnWeatherS
         tvCurrentWeather = findViewById(R.id.tv_current_weather);
         tvWarnings = findViewById(R.id.tv_warnings);
         chart = findViewById(R.id.weather_chart);
+        btnSaveChart = findViewById(R.id.btn_save_chart);
 
         latitude = getIntent().getDoubleExtra("LATITUDE", 52.23);
         longitude = getIntent().getDoubleExtra("LONGITUDE", 21.01);
 
         tvCurrentWeather.setText(String.format("Lokalizacja: %.4f, %.4f\nWybierz parametry powyżej, aby zobaczyć wykres.", latitude, longitude));
+
+        btnSaveChart.setOnClickListener(v -> {
+            if (chart.getData() != null && chart.getData().getDataSetCount() > 0) {
+                saveChartToGallery();
+            } else {
+                Toast.makeText(this, "Najpierw pobierz dane, aby zapisać wykres!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         configureChartAppearance();
     }
@@ -297,5 +317,56 @@ public class ShowWeatherActivity extends AppCompatActivity implements OnWeatherS
         rightAxis.setTextColor(Color.BLACK);
 
         chart.getLegend().setTextColor(Color.BLACK);
+    }
+
+    private void saveChartToGallery() {
+        // pobranie wykresu
+        Bitmap bitmap = chart.getChartBitmap();
+
+        String filename = "WykresPogody_" + System.currentTimeMillis() + ".png";
+        OutputStream fos;
+
+        try {
+            // dla nowych androiów
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                ContentValues resolver = new ContentValues();
+                resolver.put(MediaStore.Images.Media.DISPLAY_NAME, filename);
+                resolver.put(MediaStore.Images.Media.MIME_TYPE, "image/png");
+                resolver.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + "/WeatherApp");
+                resolver.put(MediaStore.Images.Media.IS_PENDING, 1);
+
+                Uri imageUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, resolver);
+                fos = getContentResolver().openOutputStream(imageUri);
+
+                // zapis
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+                fos.close();
+
+                resolver.clear();
+                resolver.put(MediaStore.Images.Media.IS_PENDING, 0);
+                getContentResolver().update(imageUri, resolver, null, null);
+
+                Toast.makeText(this, "Zapisano w folderze Obrazy/WeatherApp", Toast.LENGTH_LONG).show();
+
+            } else {
+                // dla starszych Androidów (< 10)
+                String imagesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();
+                String savedImageURL = MediaStore.Images.Media.insertImage(
+                        getContentResolver(),
+                        bitmap,
+                        filename,
+                        "Wykres wygenerowany przez aplikację pogodową"
+                );
+
+                if (savedImageURL != null) {
+                    Toast.makeText(this, "Zapisano wykres w Galerii", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(this, "Błąd zapisu (sprawdź uprawnienia)", Toast.LENGTH_SHORT).show();
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Błąd zapisu: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 }

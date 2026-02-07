@@ -7,12 +7,14 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#C5D8D1"
+        android:gravity="center"
+        android:padding="24dp"
         android:text="Wybierz miejsce klikając na mapę"
         android:textAlignment="center"
-        android:padding="12dp"
+        android:textColor="#12263A"
         android:textSize="18sp"
-        android:textStyle="bold"
-        android:background="#E0E0E0"/>
+        android:textStyle="bold" />
 
     <org.osmdroid.views.MapView
         android:id="@+id/map"
@@ -22,26 +24,30 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="121dp"
+        android:background="#C5D8D1"
+        android:elevation="8dp"
         android:orientation="vertical"
-        android:padding="16dp"
-        android:background="#FFFFFF"
-        android:elevation="8dp">
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/tvSelectedInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nie wybrano miejsca"
+            android:layout_marginBottom="10dp"
             android:gravity="center"
-            android:textSize="14sp"
-            android:layout_marginBottom="10dp"/>
+            android:text="Nie wybrano miejsca"
+            android:textColor="#12263A"
+            android:textSize="14sp" />
 
         <Button
             android:id="@+id/btnConfirmLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="#06BCC1"
+            android:enabled="false"
             android:text="ZATWIERDŹ WYBÓR"
-            android:enabled="false"/> </LinearLayout>
+            android:textColor="#12263A" />
+    </LinearLayout>
 
 </LinearLayout>

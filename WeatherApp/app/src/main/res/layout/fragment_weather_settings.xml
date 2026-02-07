@@ -3,8 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:background="#E3F2FD">
+    android:paddingStart="8dp"
+    android:paddingEnd="8dp"
+    android:paddingBottom="12dp"
+    android:paddingTop="24dp"
+    android:background="#C5D8D1">
 
     <TextView
         android:layout_width="wrap_content"
@@ -12,6 +15,7 @@
         android:text="Parametry Prognozy"
         android:textStyle="bold"
         android:textSize="18sp"
+        android:textColor="#12263A"
         android:layout_marginBottom="8dp"/>
 
     <LinearLayout
@@ -24,7 +28,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Liczba dni (1-16): "/>
+            android:text="Liczba dni (1-16): "
+            android:textColor="#12263A"/>
 
         <EditText
             android:id="@+id/et_days"
@@ -40,19 +45,21 @@
         android:layout_height="wrap_content"
         android:text="Wybierz dane do wyświetlenia:"
         android:textStyle="italic"
+        android:textColor="#12263A"
         android:layout_marginBottom="5dp"/>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:background="#FFFFFF"
+        android:background="#F4EDEA"
         android:padding="5dp">
 
         <LinearLayout
             android:id="@+id/checkbox_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="#F4EDEA">
 
             <CheckBox
                 android:id="@+id/cb_temp"
@@ -122,7 +129,7 @@
                 android:text="Prędkość wiatru" />
 
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <Button
         android:id="@+id/btn_apply"
@@ -130,7 +137,8 @@
         android:layout_height="wrap_content"
         android:text="Aktualizuj Wykres"
         android:layout_marginTop="10dp"
-        android:backgroundTint="#2196F3"/>
+        android:backgroundTint="#06BCC1"/>
+
 
 
 </LinearLayout>
