@@ -11,12 +11,19 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.LimitLine;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -29,9 +36,11 @@ public class ShowWeatherActivity extends AppCompatActivity implements OnWeatherS
     private LineChart chart;
     private TextView tvWarnings;
 
-
     private double latitude;
     private double longitude;
+
+    // Przechowujemy dane, aby formatter osi X miał do nich dostęp
+    private List<WeatherDataPoint> currentDataList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +51,6 @@ public class ShowWeatherActivity extends AppCompatActivity implements OnWeatherS
         tvWarnings = findViewById(R.id.tv_warnings);
         chart = findViewById(R.id.weather_chart);
 
-        // Odbieramy dane z main
         latitude = getIntent().getDoubleExtra("LATITUDE", 52.23);
         longitude = getIntent().getDoubleExtra("LONGITUDE", 21.01);
 
@@ -51,7 +59,6 @@ public class ShowWeatherActivity extends AppCompatActivity implements OnWeatherS
         configureChartAppearance();
     }
 
-    // gdy użytkownik aktualizuje
     @Override
     public void onSettingsChanged(int days, Map<String, Boolean> options) {
         fetchAndDisplayData(days, options);
@@ -67,15 +74,19 @@ public class ShowWeatherActivity extends AppCompatActivity implements OnWeatherS
         executor.execute(() -> {
             try {
                 String coordsQuery = "latitude=" + latitude + "&longitude=" + longitude;
-
-                // pobieramy pogode na danych wspolrzednych
                 String json = WeatherGetter.getWeather(coordsQuery, days);
                 List<WeatherDataPoint> data = WeatherGetter.parseFullWeather(json);
 
-                // Powrót do wątku głównego
                 handler.post(() -> {
                     if (!data.isEmpty()) {
-                        updateCurrentWeatherText(data.get(0));
+                        this.currentDataList = data; // Zapisujemy do pola klasy dla osi X
+
+                        // POPRAWKA: Pobieranie aktualnej godziny, a nie indeksu 0
+                        int currentHourIndex = getCurrentHourIndex(data);
+                        if (currentHourIndex < data.size()) {
+                            updateCurrentWeatherText(data.get(currentHourIndex));
+                        }
+
                         updateChart(data, options);
                         checkAndShowWarnings(data);
                     } else {
@@ -90,15 +101,21 @@ public class ShowWeatherActivity extends AppCompatActivity implements OnWeatherS
             }
         });
     }
-    // obsługa ostrzeżeń
+
+    private int getCurrentHourIndex(List<WeatherDataPoint> data) {
+        // Dane z OpenMeteo (hourly) zazwyczaj zaczynają się od 00:00 dnia dzisiejszego (dzięki past_days=0)
+        // Więc indeks to po prostu aktualna godzina (0-23).
+        // Dla pewności można sprawdzić datę, ale w uproszczeniu:
+        int hour = LocalTime.now().getHour();
+        // Jeśli pobraliśmy więcej dni, to i tak interesuje nas "teraz", czyli godzina w pierwszej dobie.
+        return Math.min(hour, data.size() - 1);
+    }
+
     private void checkAndShowWarnings(List<WeatherDataPoint> data) {
         List<String> warnings = WarningGenerator.generateWarnings(data);
-
         if (!warnings.isEmpty()) {
             StringBuilder sb = new StringBuilder();
-            for (String w : warnings) {
-                sb.append(w).append("\n");
-            }
+            for (String w : warnings) sb.append(w).append("\n");
             tvWarnings.setText(sb.toString().trim());
             tvWarnings.setVisibility(View.VISIBLE);
         } else {
@@ -108,8 +125,12 @@ public class ShowWeatherActivity extends AppCompatActivity implements OnWeatherS
 
     private void updateCurrentWeatherText(WeatherDataPoint current) {
         double visibilityKm = current.visibility / 1000.0;
+        // Parsujemy czas dla wyświetlenia
+        String timeStr = current.time; // Format ISO: 2023-10-10T14:00
+        String displayTime = timeStr.replace("T", " ");
 
-        String info = String.format("TERAZ:\n Temp: %.1f°C\n Wiatr: %.1f km/h\n Widoczność: %.1f km\n Ciśnienie: %.0f hPa",
+        String info = String.format("TERAZ (%s):\n Temp: %.1f°C\n Wiatr: %.1f km/h\n Widoczność: %.1f km\n Ciśnienie: %.0f hPa",
+                displayTime,
                 current.temperature,
                 current.windSpeed,
                 visibilityKm,
@@ -120,52 +141,83 @@ public class ShowWeatherActivity extends AppCompatActivity implements OnWeatherS
     private void updateChart(List<WeatherDataPoint> data, Map<String, Boolean> options) {
         LineData lineData = new LineData();
 
+        // Czyścimy stare linie limitów (średnie)
+        chart.getAxisLeft().removeAllLimitLines();
+        chart.getAxisRight().removeAllLimitLines();
+
+        // Dodajemy serie danych i od razu obliczamy średnią
         if (options.getOrDefault("temp", false))
-            lineData.addDataSet(createDataSet(data, "temp", "Temp (°C)", Color.RED));
+            addDataSetWithAverage(lineData, data, "temp", "Temp (°C)", Color.RED, chart.getAxisLeft());
 
         if (options.getOrDefault("humidity", false))
-            lineData.addDataSet(createDataSet(data, "humidity", "Wilgotność (%)", Color.BLUE));
+            addDataSetWithAverage(lineData, data, "humidity", "Wilgotność (%)", Color.BLUE, chart.getAxisLeft());
 
         if (options.getOrDefault("apparent", false))
-            lineData.addDataSet(createDataSet(data, "apparent", "Odczuwalna (°C)", Color.MAGENTA));
+            addDataSetWithAverage(lineData, data, "apparent", "Odczuwalna (°C)", Color.MAGENTA, chart.getAxisLeft());
 
         if (options.getOrDefault("precip_prob", false))
-            lineData.addDataSet(createDataSet(data, "precip_prob", "Szansa opadów (%)", Color.CYAN));
+            addDataSetWithAverage(lineData, data, "precip_prob", "Szansa opadów (%)", Color.CYAN, chart.getAxisLeft());
 
         if (options.getOrDefault("precip", false))
-            lineData.addDataSet(createDataSet(data, "precip", "Opady (mm)", Color.DKGRAY));
+            addDataSetWithAverage(lineData, data, "precip", "Opady (mm)", Color.DKGRAY, chart.getAxisLeft());
 
         if (options.getOrDefault("rain", false))
-            lineData.addDataSet(createDataSet(data, "rain", "Deszcz (mm)", Color.BLUE));
+            addDataSetWithAverage(lineData, data, "rain", "Deszcz (mm)", Color.BLUE, chart.getAxisLeft());
 
         if (options.getOrDefault("snow", false))
-            lineData.addDataSet(createDataSet(data, "snow", "Śnieg (cm)", Color.LTGRAY));
+            addDataSetWithAverage(lineData, data, "snow", "Śnieg (cm)", Color.LTGRAY, chart.getAxisLeft());
 
         if (options.getOrDefault("pressure", false))
-            lineData.addDataSet(createDataSet(data, "pressure", "Ciśnienie (hPa)", Color.GREEN));
+            addDataSetWithAverage(lineData, data, "pressure", "Ciśnienie (hPa)", Color.GREEN, chart.getAxisRight());
 
         if (options.getOrDefault("cloud", false))
-            lineData.addDataSet(createDataSet(data, "cloud", "Chmury (%)", Color.GRAY));
+            addDataSetWithAverage(lineData, data, "cloud", "Chmury (%)", Color.GRAY, chart.getAxisLeft());
 
-        // ZMIANA: Etykieta teraz mówi (km)
         if (options.getOrDefault("visibility", false))
-            lineData.addDataSet(createDataSet(data, "visibility", "Widoczność (km)", Color.YELLOW));
+            addDataSetWithAverage(lineData, data, "visibility", "Widoczność (km)", Color.YELLOW, chart.getAxisLeft());
 
         if (options.getOrDefault("wind", false))
-            lineData.addDataSet(createDataSet(data, "wind", "Wiatr (km/h)", Color.parseColor("#FF8800")));
+            addDataSetWithAverage(lineData, data, "wind", "Wiatr (km/h)", Color.parseColor("#FF8800"), chart.getAxisLeft());
 
         chart.setData(lineData);
         chart.animateX(800);
         chart.invalidate();
     }
 
+    // Metoda pomocnicza do tworzenia Datasetu i dodawania linii średniej
+    private void addDataSetWithAverage(LineData lineData, List<WeatherDataPoint> data, String type, String label, int color, YAxis axis) {
+        LineDataSet set = createDataSet(data, type, label, color);
+        lineData.addDataSet(set);
+
+        // Obliczanie średniej
+        float sum = 0;
+        int count = 0;
+        for (Entry e : set.getValues()) {
+            sum += e.getY();
+            count++;
+        }
+
+        if (count > 0) {
+            float avg = sum / count;
+
+            // POPRAWKA: Linia przerywana (średnia)
+            LimitLine ll = new LimitLine(avg, "Śr: " + String.format("%.1f", avg));
+            ll.setLineColor(color);
+            ll.setLineWidth(1f);
+            ll.enableDashedLine(10f, 10f, 0f);
+            ll.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
+            ll.setTextSize(10f);
+            ll.setTextColor(color); // Tekst w kolorze linii
+
+            axis.addLimitLine(ll);
+        }
+    }
+
     private LineDataSet createDataSet(List<WeatherDataPoint> data, String type, String label, int color) {
         List<Entry> entries = new ArrayList<>();
-
         for (int i = 0; i < data.size(); i++) {
             WeatherDataPoint p = data.get(i);
             float value = 0;
-
             switch (type) {
                 case "temp": value = (float) p.temperature; break;
                 case "humidity": value = (float) p.humidity; break;
@@ -190,13 +242,11 @@ public class ShowWeatherActivity extends AppCompatActivity implements OnWeatherS
         set.setDrawValues(false);
         set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
 
-
         if (type.equals("pressure")) {
             set.setAxisDependency(YAxis.AxisDependency.RIGHT);
         } else {
             set.setAxisDependency(YAxis.AxisDependency.LEFT);
         }
-
         return set;
     }
 
@@ -206,11 +256,46 @@ public class ShowWeatherActivity extends AppCompatActivity implements OnWeatherS
         desc.setText("");
         chart.setDescription(desc);
 
+        // POPRAWKA: Tło i kolory (dla trybu ciemnego)
+        chart.setBackgroundColor(Color.WHITE); // Wymuszenie białego tła wykresu
+        chart.setDrawGridBackground(false);
+
+        // Oś X z datami
+        XAxis xAxis = chart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setTextColor(Color.BLACK);
+        xAxis.setDrawGridLines(false);
+
+        // Formatter do zamiany indeksu na datę/godzinę
+        xAxis.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getAxisLabel(float value, AxisBase axis) {
+                int index = (int) value;
+                if (index >= 0 && index < currentDataList.size()) {
+                    String rawTime = currentDataList.get(index).time;
+                    // Format rawTime: 2023-10-27T14:00
+                    try {
+                        LocalDateTime ldt = LocalDateTime.parse(rawTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+                        // Zwracamy np. "27.10 14:00"
+                        return ldt.format(DateTimeFormatter.ofPattern("dd.MM HH:mm"));
+                    } catch (Exception e) {
+                        return rawTime;
+                    }
+                }
+                return "";
+            }
+        });
+        xAxis.setLabelRotationAngle(-45); // Obrót napisów żeby się mieściły
+
         YAxis leftAxis = chart.getAxisLeft();
         leftAxis.setDrawGridLines(true);
+        leftAxis.setTextColor(Color.BLACK);
+
         YAxis rightAxis = chart.getAxisRight();
         rightAxis.setEnabled(true);
         rightAxis.setDrawGridLines(false);
-        rightAxis.setStartAtZero(false);
+        rightAxis.setTextColor(Color.BLACK);
+
+        chart.getLegend().setTextColor(Color.BLACK);
     }
 }

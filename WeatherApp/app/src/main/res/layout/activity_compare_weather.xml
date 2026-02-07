@@ -1,167 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:background="#EFEFEF">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Porównywarka Pogody"
-        android:textAlignment="center"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="16dp"/>
+    android:padding="16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2">
-
-        <EditText
-            android:id="@+id/etCity1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Miasto 1"
-            android:layout_marginEnd="8dp"/>
-
-        <EditText
-            android:id="@+id/etCity2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Miasto 2"
-            android:layout_marginStart="8dp"/>
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/btnCompare"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="PORÓWNAJ"
-        android:layout_marginTop="10dp"
-        android:backgroundTint="#FF5722"/>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/resultsContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:visibility="gone">
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-            app:cardBackgroundColor="#E3F2FD"
-            app:cardCornerRadius="8dp"
-            app:layout_constraintEnd_toStartOf="@id/guideline"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="10dp"
-                android:gravity="center">
-
-                <TextView
-                    android:id="@+id/tvName1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="MIASTO 1"
-                    android:textStyle="bold"/>
-                <TextView
-                    android:id="@+id/tvTemp1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="20°C"
-                    android:textSize="24sp"
-                    android:textColor="#D32F2F"/>
-                <TextView
-                    android:id="@+id/tvWind1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="10 km/h"/>
-                <TextView
-                    android:id="@+id/tvRain1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0%"/>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.5" />
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            app:cardBackgroundColor="#FFF3E0"
-            app:cardCornerRadius="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/guideline"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="10dp"
-                android:gravity="center">
-
-                <TextView
-                    android:id="@+id/tvName2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="MIASTO 2"
-                    android:textStyle="bold"/>
-                <TextView
-                    android:id="@+id/tvTemp2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="15°C"
-                    android:textSize="24sp"
-                    android:textColor="#D32F2F"/>
-                <TextView
-                    android:id="@+id/tvWind2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="20 km/h"/>
-                <TextView
-                    android:id="@+id/tvRain2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="50%"/>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tvSummary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Podsumowanie..."
-            android:background="#FFFFFF"
-            android:padding="12dp"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:textStyle="italic"
-            app:layout_constraintTop_toBottomOf="@id/card1"
-            app:layout_constraintStart_toStartOf="parent"/>
+            android:text="Porównywarka"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp"
+            android:gravity="center"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-</LinearLayout>
+            <EditText
+                android:id="@+id/etCity1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Miasto 1" />
+
+            <EditText
+                android:id="@+id/etCity2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Miasto 2"
+                android:layout_marginStart="8dp"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnSelectParams"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Wybierz parametry do porównania"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="#607D8B"/>
+
+        <Button
+            android:id="@+id/btnCompare"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="PORÓWNAJ"
+            android:layout_marginTop="8dp"/>
+
+        <LinearLayout
+            android:id="@+id/resultsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_marginTop="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:baselineAligned="false">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:background="#F5F5F5"
+                    android:padding="8dp">
+
+                    <TextView android:id="@+id/tvName1" android:layout_width="match_parent" android:layout_height="wrap_content" android:textStyle="bold" android:gravity="center" android:textSize="18sp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Temp:" android:textSize="12sp"/>
+                    <TextView android:id="@+id/tvTemp1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="20sp" android:textStyle="bold"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Wiatr:" android:textSize="12sp" android:layout_marginTop="4dp"/>
+                    <TextView android:id="@+id/tvWind1" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Szansa deszczu:" android:textSize="12sp" android:layout_marginTop="4dp"/>
+                    <TextView android:id="@+id/tvRain1" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <View android:layout_width="16dp" android:layout_height="1dp"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:background="#F5F5F5"
+                    android:padding="8dp">
+
+                    <TextView android:id="@+id/tvName2" android:layout_width="match_parent" android:layout_height="wrap_content" android:textStyle="bold" android:gravity="center" android:textSize="18sp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Temp:" android:textSize="12sp"/>
+                    <TextView android:id="@+id/tvTemp2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="20sp" android:textStyle="bold"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Wiatr:" android:textSize="12sp" android:layout_marginTop="4dp"/>
+                    <TextView android:id="@+id/tvWind2" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Szansa deszczu:" android:textSize="12sp" android:layout_marginTop="4dp"/>
+                    <TextView android:id="@+id/tvRain2" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Szczegółowe porównanie (Aktualna godzina):"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"/>
+
+            <TableLayout
+                android:id="@+id/comparisonTable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stretchColumns="1,2"
+                android:background="#FFFFFF"
+                android:padding="5dp">
+            </TableLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

@@ -1,16 +1,24 @@
 package pl.edu.pw.mini.zpoif.weatherapp;
 
+import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.time.LocalTime;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -18,15 +26,24 @@ import java.util.concurrent.Executors;
 public class CompareWeatherActivity extends AppCompatActivity {
 
     private EditText etCity1, etCity2;
-    private Button btnCompare;
+    private Button btnCompare, btnSelectParams;
 
-    // Pola tekstowe dla miasta 1
+    // Pola tekstowe podstawowe
     private TextView tvName1, tvTemp1, tvWind1, tvRain1;
-    // Pola tekstowe dla miasta 2
     private TextView tvName2, tvTemp2, tvWind2, tvRain2;
+    // USUNIĘTO: private TextView tvSummary;
 
-    private TextView tvSummary;
     private View resultsContainer;
+    private TableLayout comparisonTable;
+
+    // Lista dostępnych parametrów do porównania
+    private final String[] parameterNames = {
+            "Temperatura", "Wilgotność", "Odczuwalna",
+            "Wiatr", "Szansa opadów", "Opady (mm)",
+            "Ciśnienie", "Widoczność", "Chmury"
+    };
+    // Domyślnie wybrane
+    private boolean[] selectedParameters = {true, true, false, true, true, false, false, false, false};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +53,12 @@ public class CompareWeatherActivity extends AppCompatActivity {
         etCity1 = findViewById(R.id.etCity1);
         etCity2 = findViewById(R.id.etCity2);
         btnCompare = findViewById(R.id.btnCompare);
-        resultsContainer = findViewById(R.id.resultsContainer);
-        tvSummary = findViewById(R.id.tvSummary);
+        btnSelectParams = findViewById(R.id.btnSelectParams);
 
-        // Inicjalizacja widoków wyników
+        resultsContainer = findViewById(R.id.resultsContainer);
+        // USUNIĘTO: tvSummary = findViewById(R.id.tvSummary);
+        comparisonTable = findViewById(R.id.comparisonTable);
+
         tvName1 = findViewById(R.id.tvName1);
         tvTemp1 = findViewById(R.id.tvTemp1);
         tvWind1 = findViewById(R.id.tvWind1);
@@ -50,6 +69,8 @@ public class CompareWeatherActivity extends AppCompatActivity {
         tvWind2 = findViewById(R.id.tvWind2);
         tvRain2 = findViewById(R.id.tvRain2);
 
+        btnSelectParams.setOnClickListener(v -> showParameterSelectionDialog());
+
         btnCompare.setOnClickListener(v -> {
             String city1 = etCity1.getText().toString().trim();
             String city2 = etCity2.getText().toString().trim();
@@ -58,9 +79,18 @@ public class CompareWeatherActivity extends AppCompatActivity {
                 Toast.makeText(this, "Podaj oba miasta!", Toast.LENGTH_SHORT).show();
                 return;
             }
-
             performComparison(city1, city2);
         });
+    }
+
+    private void showParameterSelectionDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Wybierz parametry do tabeli");
+        builder.setMultiChoiceItems(parameterNames, selectedParameters, (dialog, which, isChecked) -> {
+            selectedParameters[which] = isChecked;
+        });
+        builder.setPositiveButton("OK", (dialog, which) -> {});
+        builder.create().show();
     }
 
     private void performComparison(String city1, String city2) {
@@ -73,29 +103,25 @@ public class CompareWeatherActivity extends AppCompatActivity {
 
         executor.execute(() -> {
             try {
-                // 1. Pobierz współrzędne
                 String coords1 = WeatherGetter.getCoordinates(city1);
                 String coords2 = WeatherGetter.getCoordinates(city2);
 
-                // 2. Pobierz pogodę (tylko 1 dzień, bo to szybkie porównanie)
                 String json1 = WeatherGetter.getWeather(coords1, 1);
                 String json2 = WeatherGetter.getWeather(coords2, 1);
 
-                // 3. Parsuj
                 List<WeatherDataPoint> data1 = WeatherGetter.parseFullWeather(json1);
                 List<WeatherDataPoint> data2 = WeatherGetter.parseFullWeather(json2);
 
-                if (data1.isEmpty() || data2.isEmpty()) {
-                    throw new Exception("Brak danych pogodowych dla jednego z miast.");
-                }
+                if (data1.isEmpty() || data2.isEmpty()) throw new Exception("Brak danych.");
 
-                // Pobieramy aktualną godzinę (lub najbliższą dostępną)
-                WeatherDataPoint p1 = data1.get(0);
-                WeatherDataPoint p2 = data2.get(0);
+                int hour = Math.min(LocalTime.now().getHour(), data1.size() - 1);
 
-                // 4. Aktualizacja UI
+                WeatherDataPoint p1 = data1.get(hour);
+                WeatherDataPoint p2 = data2.get(hour);
+
                 handler.post(() -> {
                     updateUI(city1, p1, city2, p2);
+                    generateTable(city1, p1, city2, p2);
                     btnCompare.setEnabled(true);
                     btnCompare.setText("PORÓWNAJ");
                 });
@@ -111,37 +137,71 @@ public class CompareWeatherActivity extends AppCompatActivity {
         });
     }
 
+    private void generateTable(String name1, WeatherDataPoint p1, String name2, WeatherDataPoint p2) {
+        comparisonTable.removeAllViews();
+
+        TableRow header = new TableRow(this);
+        header.setBackgroundColor(Color.LTGRAY);
+        header.addView(createTextView("Parametr", true));
+        header.addView(createTextView(name1.toUpperCase(), true));
+        header.addView(createTextView(name2.toUpperCase(), true));
+        comparisonTable.addView(header);
+
+        if (selectedParameters[0]) addRow("Temperatura", p1.temperature + " °C", p2.temperature + " °C");
+        if (selectedParameters[1]) addRow("Wilgotność", p1.humidity + "%", p2.humidity + "%");
+        if (selectedParameters[2]) addRow("Odczuwalna", p1.apparentTemperature + " °C", p2.apparentTemperature + " °C");
+        if (selectedParameters[3]) addRow("Wiatr", p1.windSpeed + " km/h", p2.windSpeed + " km/h");
+        if (selectedParameters[4]) addRow("Szansa opadów", p1.precipitationProbability + "%", p2.precipitationProbability + "%");
+        if (selectedParameters[5]) addRow("Opady", p1.precipitation + " mm", p2.precipitation + " mm");
+        if (selectedParameters[6]) addRow("Ciśnienie", p1.surfacePressure + " hPa", p2.surfacePressure + " hPa");
+        if (selectedParameters[7]) addRow("Widoczność", (p1.visibility/1000) + " km", (p2.visibility/1000) + " km");
+        if (selectedParameters[8]) addRow("Chmury", p1.cloudCover + "%", p2.cloudCover + "%");
+    }
+
+    private void addRow(String param, String v1, String v2) {
+        TableRow row = new TableRow(this);
+        row.setPadding(0, 8, 0, 8);
+        row.addView(createTextView(param, false));
+        row.addView(createTextView(v1, false));
+        row.addView(createTextView(v2, false));
+
+        View line = new View(this);
+        line.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, 2));
+        line.setBackgroundColor(Color.parseColor("#E0E0E0"));
+
+        comparisonTable.addView(row);
+        comparisonTable.addView(line);
+    }
+
+    private TextView createTextView(String text, boolean isHeader) {
+        TextView tv = new TextView(this);
+        tv.setText(text);
+        tv.setPadding(16, 16, 16, 16);
+        tv.setGravity(Gravity.CENTER);
+        if (isHeader) {
+            tv.setTypeface(null, Typeface.BOLD);
+            tv.setTextColor(Color.BLACK);
+            tv.setTextSize(14);
+        } else {
+            tv.setTextColor(Color.DKGRAY);
+            tv.setTextSize(14);
+        }
+        return tv;
+    }
+
     private void updateUI(String name1, WeatherDataPoint p1, String name2, WeatherDataPoint p2) {
         resultsContainer.setVisibility(View.VISIBLE);
 
-        // Ustawienie danych Miasta 1
         tvName1.setText(name1.toUpperCase());
         tvTemp1.setText(String.format("%.1f°C", p1.temperature));
         tvWind1.setText(String.format("%.1f km/h", p1.windSpeed));
         tvRain1.setText(String.format("%d%%", p1.precipitationProbability));
 
-        // Ustawienie danych Miasta 2
         tvName2.setText(name2.toUpperCase());
         tvTemp2.setText(String.format("%.1f°C", p2.temperature));
         tvWind2.setText(String.format("%.1f km/h", p2.windSpeed));
         tvRain2.setText(String.format("%d%%", p2.precipitationProbability));
 
-        // Generowanie podsumowania
-        StringBuilder sb = new StringBuilder();
-        if (p1.temperature > p2.temperature) {
-            sb.append("🌡️ W ").append(name1).append(" jest cieplej o ").append(String.format("%.1f", p1.temperature - p2.temperature)).append("°C.\n");
-        } else {
-            sb.append("🌡️ W ").append(name2).append(" jest cieplej o ").append(String.format("%.1f", p2.temperature - p1.temperature)).append("°C.\n");
-        }
 
-        if (p1.precipitationProbability < p2.precipitationProbability) {
-            sb.append("☀️ Lepsza pogoda (mniej deszczu) w: ").append(name1);
-        } else if (p1.precipitationProbability > p2.precipitationProbability) {
-            sb.append("☀️ Lepsza pogoda (mniej deszczu) w: ").append(name2);
-        } else {
-            sb.append("🌧️ Szansa na deszcz jest taka sama.");
-        }
-
-        tvSummary.setText(sb.toString());
     }
 }
