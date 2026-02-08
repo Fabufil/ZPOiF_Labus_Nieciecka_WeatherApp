@@ -1,0 +1,1008 @@
+Index: app/src/main/res/layout/activity_main.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:orientation=\"vertical\"\r\n    android:padding=\"24dp\"\r\n    android:gravity=\"center\"\r\n    android:background=\"#FAFAFA\">\r\n\r\n    <TextView\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"MiNI.forecasts\"\r\n        android:textSize=\"32sp\"\r\n        android:textStyle=\"bold\"\r\n        android:textColor=\"#333\"\r\n        android:layout_marginBottom=\"40dp\"/>\r\n\r\n    <com.google.android.material.textfield.TextInputLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginBottom=\"8dp\">\r\n\r\n        <EditText\r\n            android:id=\"@+id/etCityName\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:hint=\"Wpisz nazwę miasta\"\r\n            android:inputType=\"textCapWords\"\r\n            android:singleLine=\"true\"/>\r\n    </com.google.android.material.textfield.TextInputLayout>\r\n\r\n    <Button\r\n        android:id=\"@+id/btnSearchCity\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"60dp\"\r\n        android:text=\"Sprawdź pogodę\"\r\n        android:textAllCaps=\"false\"\r\n        android:backgroundTint=\"#1976D2\"\r\n        android:layout_marginBottom=\"24dp\"/>\r\n\r\n    <View\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"1dp\"\r\n        android:background=\"#DDD\"\r\n        android:layout_marginBottom=\"24dp\"/>\r\n\r\n    <Button\r\n        android:id=\"@+id/btnOpenMap\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"Wybierz z mapy\"\r\n        android:textAllCaps=\"false\"\r\n        android:backgroundTint=\"#1976D2\"\r\n        android:layout_marginBottom=\"8dp\"/>\r\n\r\n    <Button\r\n        android:id=\"@+id/btnOpenCompare\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"Porównywarka miast\"\r\n        android:textAllCaps=\"false\"\r\n        android:backgroundTint=\"#1976D2\"/>\r\n\r\n</LinearLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_main.xml b/app/src/main/res/layout/activity_main.xml
+--- a/app/src/main/res/layout/activity_main.xml	(revision feccec500cfbf28b1792c1952811e12cac3ad8cf)
++++ b/app/src/main/res/layout/activity_main.xml	(date 1770532397638)
+@@ -4,62 +4,78 @@
+     android:layout_height="match_parent"
+     android:orientation="vertical"
+     android:padding="24dp"
+-    android:gravity="center"
+-    android:background="#FAFAFA">
++    android:gravity="center_vertical"
++    android:background="#F5F5F5">
+ 
+     <TextView
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+-        android:text="MiNI.forecasts"
+-        android:textSize="32sp"
++        android:text="Aplikacja Pogodowa"
++        android:textSize="28sp"
+         android:textStyle="bold"
+-        android:textColor="#333"
+-        android:layout_marginBottom="40dp"/>
++        android:textColor="#333333"
++        android:layout_marginBottom="40dp"
++        android:layout_gravity="center"/>
+ 
+-    <com.google.android.material.textfield.TextInputLayout
++    <androidx.cardview.widget.CardView
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+-        android:layout_marginBottom="8dp">
++        android:elevation="4dp"
++        android:layout_marginBottom="20dp">
++
++        <LinearLayout
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:orientation="vertical"
++            android:padding="16dp">
++
++            <TextView
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:text="Sprawdź konkretne miasto"
++                android:textStyle="bold"
++                android:layout_marginBottom="8dp"/>
+ 
+-        <EditText
+-            android:id="@+id/etCityName"
+-            android:layout_width="match_parent"
+-            android:layout_height="wrap_content"
+-            android:hint="Wpisz nazwę miasta"
+-            android:inputType="textCapWords"
+-            android:singleLine="true"/>
+-    </com.google.android.material.textfield.TextInputLayout>
++            <EditText
++                android:id="@+id/etCityName"
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
++                android:hint="np. Warszawa"
++                android:inputType="textCapWords"/>
+ 
+-    <Button
+-        android:id="@+id/btnSearchCity"
+-        android:layout_width="match_parent"
+-        android:layout_height="60dp"
+-        android:text="Sprawdź pogodę"
+-        android:textAllCaps="false"
+-        android:backgroundTint="#1976D2"
+-        android:layout_marginBottom="24dp"/>
++            <Button
++                android:id="@+id/btnSearchCity"
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
++                android:text="Sprawdź pogodę"
++                android:layout_marginTop="10dp"
++                android:backgroundTint="#4CAF50"/>
++        </LinearLayout>
++    </androidx.cardview.widget.CardView>
+ 
+-    <View
+-        android:layout_width="match_parent"
+-        android:layout_height="1dp"
+-        android:background="#DDD"
+-        android:layout_marginBottom="24dp"/>
++    <TextView
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:text="lub wybierz inną opcję"
++        android:layout_gravity="center"
++        android:layout_marginBottom="10dp"
++        android:textColor="#777"/>
+ 
+     <Button
+         android:id="@+id/btnOpenMap"
+         android:layout_width="match_parent"
+-        android:layout_height="wrap_content"
+-        android:text="Wybierz z mapy"
+-        android:textAllCaps="false"
+-        android:backgroundTint="#1976D2"
+-        android:layout_marginBottom="8dp"/>
++        android:layout_height="60dp"
++        android:text="🗺️ Wybierz na mapie"
++        android:textSize="16sp"
++        android:layout_marginBottom="12dp"
++        android:backgroundTint="#2196F3"/>
+ 
+     <Button
+         android:id="@+id/btnOpenCompare"
+         android:layout_width="match_parent"
+-        android:layout_height="wrap_content"
+-        android:text="Porównywarka miast"
+-        android:textAllCaps="false"
+-        android:backgroundTint="#1976D2"/>
++        android:layout_height="60dp"
++        android:text="⚖️ Porównaj dwa miasta"
++        android:textSize="16sp"
++        android:backgroundTint="#FF9800"/>
+ 
+ </LinearLayout>
+\ No newline at end of file
+Index: app/src/main/java/pl/edu/pw/mini/zpoif/weatherapp/WarningGenerator.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package pl.edu.pw.mini.zpoif.weatherapp;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\npublic class WarningGenerator {\r\n\r\n    public static List<String> generateWarnings(List<WeatherDataPoint> data) {\r\n        List<String> warnings = new ArrayList<>();\r\n\r\n        boolean isFreezing = false;\r\n        boolean isSlippery = false;\r\n        boolean isWindy = false;\r\n        boolean isHot = false;\r\n        boolean isStormy = false;\r\n        boolean isSnowing = false;\r\n        boolean isRaining = false;\r\n        boolean isLowPressure = false;\r\n        boolean isFoggy = false;\r\n\r\n\r\n        // Analizujemy pierwsze 24h\r\n        int count = Math.min(data.size(), 24);\r\n\r\n        for (int i = 0; i < count; i++) {\r\n            WeatherDataPoint point = data.get(i);\r\n\r\n            // 1. upał\r\n            if (point.temperature > 30.0) isHot = true;\r\n\r\n            // 2. mróz\r\n            if (point.temperature < -10.0) isFreezing = true;\r\n\r\n            // 3. ślisko\r\n            if (point.temperature <= 2.0 && point.temperature >= -3.0 && point.rain > 0.0) {\r\n                isSlippery = true;\r\n            }\r\n\r\n            // 4. silny wiatr\r\n            if (point.windSpeed > 25.0) isWindy = true;\r\n\r\n            // 5. burza\r\n            if (point.rain > 2.0 || (point.visibility < 200 && point.visibility > 0)) {\r\n                isStormy = true;\r\n            }\r\n\r\n            // 6. śnieżyca\r\n            if (point.snowfall > 0.5) {\r\n                isSnowing = true;\r\n            }\r\n\r\n            // 7. deszcz\r\n            if (point.precipitationProbability > 80) {\r\n                isRaining = true;\r\n            }\r\n\r\n            // 8. spadek cisnienia\r\n            if (point.surfacePressure < 990.0) {\r\n                isLowPressure = true;\r\n            }\r\n\r\n            // 9. mgła\r\n            if (point.visibility < 300.0 && point.windSpeed < 10.0) {\r\n                isFoggy = true;\r\n            }\r\n\r\n        }\r\n\r\n        if (isSlippery) warnings.add(\" UWAGA: Może być ślisko!\");\r\n        if (isWindy) warnings.add(\"UWAGA: Silny wiatr!\");\r\n        if (isFreezing) warnings.add(\"UWAGA: Bardzo niskie temperatury!\");\r\n        if (isHot) warnings.add(\"UWAGA: Upał!\");\r\n        if (isStormy) warnings.add(\"UWAGA: Trudne warunki (ulewa/mgła)!\");\r\n        if (isSnowing) warnings.add(\"UWAGA: Opady śniegu!\");\r\n        if (isRaining) warnings.add(\"UWAGA: Opady deszczu - weż parasol!\");\r\n        if (isLowPressure) warnings.add(\"UWAGA: Spadek cisnienia!\");\r\n        if (isFoggy) warnings.add(\"UWAGA: Mgla!\");\r\n        return warnings;\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/pl/edu/pw/mini/zpoif/weatherapp/WarningGenerator.java b/app/src/main/java/pl/edu/pw/mini/zpoif/weatherapp/WarningGenerator.java
+--- a/app/src/main/java/pl/edu/pw/mini/zpoif/weatherapp/WarningGenerator.java	(revision feccec500cfbf28b1792c1952811e12cac3ad8cf)
++++ b/app/src/main/java/pl/edu/pw/mini/zpoif/weatherapp/WarningGenerator.java	(date 1770532168367)
+@@ -72,7 +72,7 @@
+         if (isHot) warnings.add("UWAGA: Upał!");
+         if (isStormy) warnings.add("UWAGA: Trudne warunki (ulewa/mgła)!");
+         if (isSnowing) warnings.add("UWAGA: Opady śniegu!");
+-        if (isRaining) warnings.add("UWAGA: Opady deszczu - weż parasol!");
++        if (isRaining) warnings.add("UWAGA: Opady deszczu - weź parasol!");
+         if (isLowPressure) warnings.add("UWAGA: Spadek cisnienia!");
+         if (isFoggy) warnings.add("UWAGA: Mgla!");
+         return warnings;
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\">\r\n\r\n    <uses-permission android:name=\"android.permission.INTERNET\" />\r\n\r\n    <application\r\n        android:allowBackup=\"true\"\r\n        android:dataExtractionRules=\"@xml/data_extraction_rules\"\r\n        android:fullBackupContent=\"@xml/backup_rules\"\r\n        android:icon=\"@mipmap/ic_launcher\"\r\n        android:label=\"@string/app_name\"\r\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\r\n        android:supportsRtl=\"true\"\r\n        android:theme=\"@style/Theme.WeatherApp\">\r\n\r\n        <activity\r\n            android:name=\".MainActivity\"\r\n            android:exported=\"true\"\r\n            android:theme=\"@style/Theme.WeatherApp\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n            </intent-filter>\r\n        </activity>\r\n\r\n        <activity\r\n            android:name=\".MapActivity\"\r\n            android:exported=\"false\" />\r\n\r\n        <activity\r\n            android:name=\".ShowWeatherActivity\"\r\n            android:exported=\"false\" />\r\n\r\n        <activity\r\n            android:name=\".CompareWeatherActivity\"\r\n            android:exported=\"false\" />\r\n\r\n    </application>\r\n\r\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml
+--- a/app/src/main/AndroidManifest.xml	(revision feccec500cfbf28b1792c1952811e12cac3ad8cf)
++++ b/app/src/main/AndroidManifest.xml	(date 1770532168363)
+@@ -4,6 +4,8 @@
+ 
+     <uses-permission android:name="android.permission.INTERNET" />
+ 
++    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
++
+     <application
+         android:allowBackup="true"
+         android:dataExtractionRules="@xml/data_extraction_rules"
+Index: app/src/main/java/pl/edu/pw/mini/zpoif/weatherapp/ShowWeatherActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package pl.edu.pw.mini.zpoif.weatherapp;\r\n\r\nimport android.graphics.Color;\r\nimport android.os.Bundle;\r\nimport android.os.Handler;\r\nimport android.os.Looper;\r\nimport android.view.View;\r\nimport android.widget.Button;\r\nimport android.widget.EditText;\r\nimport android.widget.TextView;\r\nimport android.widget.Toast;\r\n\r\nimport androidx.appcompat.app.AlertDialog;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.appcompat.app.AppCompatDelegate;\r\n\r\nimport com.github.mikephil.charting.charts.LineChart;\r\nimport com.github.mikephil.charting.components.AxisBase;\r\nimport com.github.mikephil.charting.components.Description;\r\nimport com.github.mikephil.charting.components.LimitLine;\r\nimport com.github.mikephil.charting.components.XAxis;\r\nimport com.github.mikephil.charting.components.YAxis;\r\nimport com.github.mikephil.charting.data.Entry;\r\nimport com.github.mikephil.charting.data.LineData;\r\nimport com.github.mikephil.charting.data.LineDataSet;\r\nimport com.github.mikephil.charting.formatter.ValueFormatter;\r\n\r\nimport java.time.LocalDateTime;\r\nimport java.time.LocalTime;\r\nimport java.time.format.DateTimeFormatter;\r\nimport java.util.ArrayList;\r\nimport java.util.HashMap;\r\nimport java.util.List;\r\nimport java.util.Map;\r\nimport java.util.concurrent.ExecutorService;\r\nimport java.util.concurrent.Executors;\r\n\r\npublic class ShowWeatherActivity extends AppCompatActivity {\r\n\r\n    private TextView tvCurrentWeather;\r\n    private LineChart chart;\r\n    private TextView tvWarnings;\r\n    private EditText etDays; // PRZYWRÓCONO\r\n    private Button btnSelectParams, btnUpdate;\r\n\r\n    private double latitude;\r\n    private double longitude;\r\n    private List<WeatherDataPoint> currentDataList = new ArrayList<>();\r\n\r\n    private final String[] parameterNames = {\r\n            \"Temperatura\", \"Wilgotność\", \"Odczuwalna\",\r\n            \"Szansa opadów\", \"Opady (mm)\", \"Deszcz (mm)\",\r\n            \"Śnieg (cm)\", \"Ciśnienie\", \"Chmury\",\r\n            \"Widoczność\", \"Wiatr\"\r\n    };\r\n    private final String[] parameterKeys = {\r\n            \"temp\", \"humidity\", \"apparent\",\r\n            \"precip_prob\", \"precip\", \"rain\",\r\n            \"snow\", \"pressure\", \"cloud\",\r\n            \"visibility\", \"wind\"\r\n    };\r\n    private boolean[] selectedParameters = {true, true, false, false, false, false, false, false, false, false, false};\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);\r\n        setContentView(R.layout.activity_show_weather);\r\n\r\n        tvCurrentWeather = findViewById(R.id.tv_current_weather);\r\n        tvWarnings = findViewById(R.id.tv_warnings);\r\n        chart = findViewById(R.id.weather_chart);\r\n        etDays = findViewById(R.id.et_days); // PRZYWRÓCONO\r\n        btnSelectParams = findViewById(R.id.btn_select_params);\r\n        btnUpdate = findViewById(R.id.btn_update);\r\n\r\n        latitude = getIntent().getDoubleExtra(\"LATITUDE\", 52.23);\r\n        longitude = getIntent().getDoubleExtra(\"LONGITUDE\", 21.01);\r\n\r\n        tvCurrentWeather.setText(String.format(\"Lokalizacja: %.4f, %.4f\\nWybierz parametry i kliknij Aktualizuj.\", latitude, longitude));\r\n\r\n        configureChartAppearance();\r\n\r\n        btnSelectParams.setOnClickListener(v -> showParameterSelectionDialog());\r\n\r\n        btnUpdate.setOnClickListener(v -> {\r\n            String daysStr = etDays.getText().toString();\r\n            if(daysStr.isEmpty()) return;\r\n            int days = Integer.parseInt(daysStr);\r\n            if(days < 1) days = 1;\r\n            if(days > 16) days = 16;\r\n\r\n            fetchAndDisplayData(days);\r\n        });\r\n    }\r\n\r\n    private void showParameterSelectionDialog() {\r\n        AlertDialog.Builder builder = new AlertDialog.Builder(this);\r\n        builder.setTitle(\"Wybierz dane do wykresu\");\r\n        builder.setMultiChoiceItems(parameterNames, selectedParameters, (dialog, which, isChecked) -> {\r\n            selectedParameters[which] = isChecked;\r\n        });\r\n        builder.setPositiveButton(\"Zatwierdź\", (dialog, which) -> {});\r\n        builder.create().show();\r\n    }\r\n\r\n    private void fetchAndDisplayData(int days) {\r\n        ExecutorService executor = Executors.newSingleThreadExecutor();\r\n        Handler handler = new Handler(Looper.getMainLooper());\r\n\r\n        tvCurrentWeather.setText(\"Pobieranie danych...\");\r\n        tvWarnings.setVisibility(View.GONE);\r\n\r\n        executor.execute(() -> {\r\n            try {\r\n                String coordsQuery = \"latitude=\" + latitude + \"&longitude=\" + longitude;\r\n                // PRZYWRÓCONO: użycie int days\r\n                String json = WeatherGetter.getWeather(coordsQuery, days);\r\n                List<WeatherDataPoint> data = WeatherGetter.parseFullWeather(json);\r\n\r\n                handler.post(() -> {\r\n                    if (!data.isEmpty()) {\r\n                        this.currentDataList = data;\r\n\r\n                        int currentHourIndex = getCurrentHourIndex(data);\r\n                        if (currentHourIndex < data.size()) {\r\n                            updateCurrentWeatherText(data.get(currentHourIndex));\r\n                        }\r\n\r\n                        Map<String, Boolean> optionsMap = new HashMap<>();\r\n                        for(int i=0; i<selectedParameters.length; i++) {\r\n                            optionsMap.put(parameterKeys[i], selectedParameters[i]);\r\n                        }\r\n\r\n                        updateChart(data, optionsMap);\r\n                        checkAndShowWarnings(data);\r\n                    } else {\r\n                        tvCurrentWeather.setText(\"Brak danych.\");\r\n                        chart.clear();\r\n                    }\r\n                });\r\n\r\n            } catch (Exception e) {\r\n                e.printStackTrace();\r\n                handler.post(() -> Toast.makeText(this, \"Błąd: \" + e.getMessage(), Toast.LENGTH_LONG).show());\r\n            }\r\n        });\r\n    }\r\n\r\n    private int getCurrentHourIndex(List<WeatherDataPoint> data) {\r\n        int hour = LocalTime.now().getHour();\r\n        return Math.min(hour, data.size() - 1);\r\n    }\r\n\r\n    private void checkAndShowWarnings(List<WeatherDataPoint> data) {\r\n        List<String> warnings = WarningGenerator.generateWarnings(data);\r\n        if (!warnings.isEmpty()) {\r\n            StringBuilder sb = new StringBuilder();\r\n            for (String w : warnings) sb.append(w).append(\"\\n\");\r\n            tvWarnings.setText(sb.toString().trim());\r\n            tvWarnings.setVisibility(View.VISIBLE);\r\n        } else {\r\n            tvWarnings.setVisibility(View.GONE);\r\n        }\r\n    }\r\n\r\n    private void updateCurrentWeatherText(WeatherDataPoint current) {\r\n        double visibilityKm = current.visibility / 1000.0;\r\n        String timeStr = current.time.replace(\"T\", \" \");\r\n\r\n        String info = String.format(\"Teraz (%s):\\n Temp: %.1f°C\\n Wiatr: %.1f km/h\\n Widoczność: %.1f km\\n Ciśnienie: %.0f hPa\",\r\n                timeStr, current.temperature, current.windSpeed, visibilityKm, current.surfacePressure);\r\n        tvCurrentWeather.setText(info);\r\n    }\r\n\r\n    private void updateChart(List<WeatherDataPoint> data, Map<String, Boolean> options) {\r\n        LineData lineData = new LineData();\r\n        chart.getAxisLeft().removeAllLimitLines();\r\n        chart.getAxisRight().removeAllLimitLines();\r\n\r\n        if (options.getOrDefault(\"temp\", false)) addDataSetWithAverage(lineData, data, \"temp\", \"Temp (°C)\", Color.RED, chart.getAxisLeft());\r\n        if (options.getOrDefault(\"humidity\", false)) addDataSetWithAverage(lineData, data, \"humidity\", \"Wilgotność (%)\", Color.BLUE, chart.getAxisLeft());\r\n        if (options.getOrDefault(\"apparent\", false)) addDataSetWithAverage(lineData, data, \"apparent\", \"Odczuwalna (°C)\", Color.MAGENTA, chart.getAxisLeft());\r\n        if (options.getOrDefault(\"precip_prob\", false)) addDataSetWithAverage(lineData, data, \"precip_prob\", \"Szansa opadów (%)\", Color.CYAN, chart.getAxisLeft());\r\n        if (options.getOrDefault(\"precip\", false)) addDataSetWithAverage(lineData, data, \"precip\", \"Opady (mm)\", Color.DKGRAY, chart.getAxisLeft());\r\n        if (options.getOrDefault(\"rain\", false)) addDataSetWithAverage(lineData, data, \"rain\", \"Deszcz (mm)\", Color.BLUE, chart.getAxisLeft());\r\n        if (options.getOrDefault(\"snow\", false)) addDataSetWithAverage(lineData, data, \"snow\", \"Śnieg (cm)\", Color.LTGRAY, chart.getAxisLeft());\r\n        if (options.getOrDefault(\"pressure\", false)) addDataSetWithAverage(lineData, data, \"pressure\", \"Ciśnienie (hPa)\", Color.GREEN, chart.getAxisRight());\r\n        if (options.getOrDefault(\"cloud\", false)) addDataSetWithAverage(lineData, data, \"cloud\", \"Chmury (%)\", Color.GRAY, chart.getAxisLeft());\r\n        if (options.getOrDefault(\"visibility\", false)) addDataSetWithAverage(lineData, data, \"visibility\", \"Widoczność (km)\", Color.YELLOW, chart.getAxisLeft());\r\n        if (options.getOrDefault(\"wind\", false)) addDataSetWithAverage(lineData, data, \"wind\", \"Wiatr (km/h)\", Color.parseColor(\"#FF8800\"), chart.getAxisLeft());\r\n\r\n        chart.setData(lineData);\r\n        chart.animateX(800);\r\n        chart.invalidate();\r\n    }\r\n\r\n    private void addDataSetWithAverage(LineData lineData, List<WeatherDataPoint> data, String type, String label, int color, YAxis axis) {\r\n        LineDataSet set = createDataSet(data, type, label, color);\r\n        lineData.addDataSet(set);\r\n\r\n        float sum = 0;\r\n        int count = 0;\r\n        for (Entry e : set.getValues()) { sum += e.getY(); count++; }\r\n        if (count > 0) {\r\n            float avg = sum / count;\r\n            LimitLine ll = new LimitLine(avg, \"Śr: \" + String.format(\"%.1f\", avg));\r\n            ll.setLineColor(color);\r\n            ll.setLineWidth(1f);\r\n            ll.enableDashedLine(10f, 10f, 0f);\r\n            ll.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);\r\n            ll.setTextSize(10f);\r\n            ll.setTextColor(color);\r\n            axis.addLimitLine(ll);\r\n        }\r\n    }\r\n\r\n    private LineDataSet createDataSet(List<WeatherDataPoint> data, String type, String label, int color) {\r\n        List<Entry> entries = new ArrayList<>();\r\n        for (int i = 0; i < data.size(); i++) {\r\n            WeatherDataPoint p = data.get(i);\r\n            float value = 0;\r\n            switch (type) {\r\n                case \"temp\": value = (float) p.temperature; break;\r\n                case \"humidity\": value = (float) p.humidity; break;\r\n                case \"apparent\": value = (float) p.apparentTemperature; break;\r\n                case \"precip_prob\": value = (float) p.precipitationProbability; break;\r\n                case \"precip\": value = (float) p.precipitation; break;\r\n                case \"rain\": value = (float) p.rain; break;\r\n                case \"snow\": value = (float) p.snowfall; break;\r\n                case \"pressure\": value = (float) p.surfacePressure; break;\r\n                case \"cloud\": value = (float) p.cloudCover; break;\r\n                case \"visibility\": value = (float) p.visibility / 1000f; break;\r\n                case \"wind\": value = (float) p.windSpeed; break;\r\n            }\r\n            entries.add(new Entry(i, value));\r\n        }\r\n\r\n        LineDataSet set = new LineDataSet(entries, label);\r\n        set.setColor(color);\r\n        set.setCircleColor(color);\r\n        set.setLineWidth(2f);\r\n        set.setCircleRadius(1.5f);\r\n        set.setDrawValues(false);\r\n        set.setMode(LineDataSet.Mode.CUBIC_BEZIER);\r\n\r\n        if (type.equals(\"pressure\")) set.setAxisDependency(YAxis.AxisDependency.RIGHT);\r\n        else set.setAxisDependency(YAxis.AxisDependency.LEFT);\r\n\r\n        return set;\r\n    }\r\n\r\n    private void configureChartAppearance() {\r\n        chart.setNoDataText(\"Kliknij Aktualizuj, aby zobaczyć wykres\");\r\n        Description desc = new Description();\r\n        desc.setText(\"\");\r\n        chart.setDescription(desc);\r\n        chart.setBackgroundColor(Color.WHITE);\r\n        chart.setDrawGridBackground(false);\r\n\r\n        XAxis xAxis = chart.getXAxis();\r\n        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);\r\n        xAxis.setTextColor(Color.BLACK);\r\n        xAxis.setDrawGridLines(false);\r\n        xAxis.setValueFormatter(new ValueFormatter() {\r\n            @Override\r\n            public String getAxisLabel(float value, AxisBase axis) {\r\n                int index = (int) value;\r\n                if (index >= 0 && index < currentDataList.size()) {\r\n                    try {\r\n                        LocalDateTime ldt = LocalDateTime.parse(currentDataList.get(index).time, DateTimeFormatter.ISO_LOCAL_DATE_TIME);\r\n                        return ldt.format(DateTimeFormatter.ofPattern(\"dd.MM HH:mm\"));\r\n                    } catch (Exception e) { return \"\"; }\r\n                }\r\n                return \"\";\r\n            }\r\n        });\r\n        xAxis.setLabelRotationAngle(-45);\r\n\r\n        chart.getAxisLeft().setTextColor(Color.BLACK);\r\n        chart.getAxisRight().setTextColor(Color.BLACK);\r\n        chart.getLegend().setTextColor(Color.BLACK);\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/pl/edu/pw/mini/zpoif/weatherapp/ShowWeatherActivity.java b/app/src/main/java/pl/edu/pw/mini/zpoif/weatherapp/ShowWeatherActivity.java
+--- a/app/src/main/java/pl/edu/pw/mini/zpoif/weatherapp/ShowWeatherActivity.java	(revision feccec500cfbf28b1792c1952811e12cac3ad8cf)
++++ b/app/src/main/java/pl/edu/pw/mini/zpoif/weatherapp/ShowWeatherActivity.java	(date 1770532378526)
+@@ -6,13 +6,10 @@
+ import android.os.Looper;
+ import android.view.View;
+ import android.widget.Button;
+-import android.widget.EditText;
+ import android.widget.TextView;
+ import android.widget.Toast;
+ 
+-import androidx.appcompat.app.AlertDialog;
+ import androidx.appcompat.app.AppCompatActivity;
+-import androidx.appcompat.app.AppCompatDelegate;
+ 
+ import com.github.mikephil.charting.charts.LineChart;
+ import com.github.mikephil.charting.components.AxisBase;
+@@ -29,82 +26,65 @@
+ import java.time.LocalTime;
+ import java.time.format.DateTimeFormatter;
+ import java.util.ArrayList;
+-import java.util.HashMap;
+ import java.util.List;
+ import java.util.Map;
+ import java.util.concurrent.ExecutorService;
+ import java.util.concurrent.Executors;
+ 
+-public class ShowWeatherActivity extends AppCompatActivity {
++import android.content.ContentValues;
++import android.graphics.Bitmap;
++import android.net.Uri;
++import android.os.Build;
++import android.os.Environment;
++import android.provider.MediaStore;
++import java.io.OutputStream;
++import java.io.IOException;
++
++public class ShowWeatherActivity extends AppCompatActivity implements OnWeatherSettingsListener {
+ 
+     private TextView tvCurrentWeather;
+     private LineChart chart;
+     private TextView tvWarnings;
+-    private EditText etDays; // PRZYWRÓCONO
+-    private Button btnSelectParams, btnUpdate;
++    private Button btnSaveChart;
+ 
+     private double latitude;
+     private double longitude;
++
++    // Przechowujemy dane, aby formatter osi X miał do nich dostęp
+     private List<WeatherDataPoint> currentDataList = new ArrayList<>();
+ 
+-    private final String[] parameterNames = {
+-            "Temperatura", "Wilgotność", "Odczuwalna",
+-            "Szansa opadów", "Opady (mm)", "Deszcz (mm)",
+-            "Śnieg (cm)", "Ciśnienie", "Chmury",
+-            "Widoczność", "Wiatr"
+-    };
+-    private final String[] parameterKeys = {
+-            "temp", "humidity", "apparent",
+-            "precip_prob", "precip", "rain",
+-            "snow", "pressure", "cloud",
+-            "visibility", "wind"
+-    };
+-    private boolean[] selectedParameters = {true, true, false, false, false, false, false, false, false, false, false};
+-
+     @Override
+     protected void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
+-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+         setContentView(R.layout.activity_show_weather);
+ 
+         tvCurrentWeather = findViewById(R.id.tv_current_weather);
+         tvWarnings = findViewById(R.id.tv_warnings);
+         chart = findViewById(R.id.weather_chart);
+-        etDays = findViewById(R.id.et_days); // PRZYWRÓCONO
+-        btnSelectParams = findViewById(R.id.btn_select_params);
+-        btnUpdate = findViewById(R.id.btn_update);
++        btnSaveChart = findViewById(R.id.btn_save_chart);
+ 
+         latitude = getIntent().getDoubleExtra("LATITUDE", 52.23);
+         longitude = getIntent().getDoubleExtra("LONGITUDE", 21.01);
+ 
+-        tvCurrentWeather.setText(String.format("Lokalizacja: %.4f, %.4f\nWybierz parametry i kliknij Aktualizuj.", latitude, longitude));
++        tvCurrentWeather.setText(String.format("Lokalizacja: %.4f, %.4f\nWybierz parametry powyżej, aby zobaczyć wykres.", latitude, longitude));
++
++        btnSaveChart.setOnClickListener(v -> {
++            if (chart.getData() != null && chart.getData().getDataSetCount() > 0) {
++                saveChartToGallery();
++            } else {
++                Toast.makeText(this, "Najpierw pobierz dane, aby zapisać wykres!", Toast.LENGTH_SHORT).show();
++            }
++        });
+ 
+         configureChartAppearance();
+-
+-        btnSelectParams.setOnClickListener(v -> showParameterSelectionDialog());
+-
+-        btnUpdate.setOnClickListener(v -> {
+-            String daysStr = etDays.getText().toString();
+-            if(daysStr.isEmpty()) return;
+-            int days = Integer.parseInt(daysStr);
+-            if(days < 1) days = 1;
+-            if(days > 16) days = 16;
+-
+-            fetchAndDisplayData(days);
+-        });
+     }
+ 
+-    private void showParameterSelectionDialog() {
+-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+-        builder.setTitle("Wybierz dane do wykresu");
+-        builder.setMultiChoiceItems(parameterNames, selectedParameters, (dialog, which, isChecked) -> {
+-            selectedParameters[which] = isChecked;
+-        });
+-        builder.setPositiveButton("Zatwierdź", (dialog, which) -> {});
+-        builder.create().show();
++    @Override
++    public void onSettingsChanged(int days, Map<String, Boolean> options) {
++        fetchAndDisplayData(days, options);
+     }
+ 
+-    private void fetchAndDisplayData(int days) {
++    private void fetchAndDisplayData(int days, Map<String, Boolean> options) {
+         ExecutorService executor = Executors.newSingleThreadExecutor();
+         Handler handler = new Handler(Looper.getMainLooper());
+ 
+@@ -114,25 +94,20 @@
+         executor.execute(() -> {
+             try {
+                 String coordsQuery = "latitude=" + latitude + "&longitude=" + longitude;
+-                // PRZYWRÓCONO: użycie int days
+                 String json = WeatherGetter.getWeather(coordsQuery, days);
+                 List<WeatherDataPoint> data = WeatherGetter.parseFullWeather(json);
+ 
+                 handler.post(() -> {
+                     if (!data.isEmpty()) {
+-                        this.currentDataList = data;
++                        this.currentDataList = data; // Zapisujemy do pola klasy dla osi X
+ 
++                        // POPRAWKA: Pobieranie aktualnej godziny, a nie indeksu 0
+                         int currentHourIndex = getCurrentHourIndex(data);
+                         if (currentHourIndex < data.size()) {
+                             updateCurrentWeatherText(data.get(currentHourIndex));
+                         }
+ 
+-                        Map<String, Boolean> optionsMap = new HashMap<>();
+-                        for(int i=0; i<selectedParameters.length; i++) {
+-                            optionsMap.put(parameterKeys[i], selectedParameters[i]);
+-                        }
+-
+-                        updateChart(data, optionsMap);
++                        updateChart(data, options);
+                         checkAndShowWarnings(data);
+                     } else {
+                         tvCurrentWeather.setText("Brak danych.");
+@@ -148,7 +123,11 @@
+     }
+ 
+     private int getCurrentHourIndex(List<WeatherDataPoint> data) {
++        // Dane z OpenMeteo (hourly) zazwyczaj zaczynają się od 00:00 dnia dzisiejszego (dzięki past_days=0)
++        // Więc indeks to po prostu aktualna godzina (0-23).
++        // Dla pewności można sprawdzić datę, ale w uproszczeniu:
+         int hour = LocalTime.now().getHour();
++        // Jeśli pobraliśmy więcej dni, to i tak interesuje nas "teraz", czyli godzina w pierwszej dobie.
+         return Math.min(hour, data.size() - 1);
+     }
+ 
+@@ -166,51 +145,90 @@
+ 
+     private void updateCurrentWeatherText(WeatherDataPoint current) {
+         double visibilityKm = current.visibility / 1000.0;
+-        String timeStr = current.time.replace("T", " ");
++        // Parsujemy czas dla wyświetlenia
++        String timeStr = current.time; // Format ISO: 2023-10-10T14:00
++        String displayTime = timeStr.replace("T", " ");
+ 
+-        String info = String.format("Teraz (%s):\n Temp: %.1f°C\n Wiatr: %.1f km/h\n Widoczność: %.1f km\n Ciśnienie: %.0f hPa",
+-                timeStr, current.temperature, current.windSpeed, visibilityKm, current.surfacePressure);
++        String info = String.format("TERAZ (%s):\n Temp: %.1f°C\n Wiatr: %.1f km/h\n Widoczność: %.1f km\n Ciśnienie: %.0f hPa",
++                displayTime,
++                current.temperature,
++                current.windSpeed,
++                visibilityKm,
++                current.surfacePressure);
+         tvCurrentWeather.setText(info);
+     }
+ 
+     private void updateChart(List<WeatherDataPoint> data, Map<String, Boolean> options) {
+         LineData lineData = new LineData();
++
++        // Czyścimy stare linie limitów (średnie)
+         chart.getAxisLeft().removeAllLimitLines();
+         chart.getAxisRight().removeAllLimitLines();
+ 
+-        if (options.getOrDefault("temp", false)) addDataSetWithAverage(lineData, data, "temp", "Temp (°C)", Color.RED, chart.getAxisLeft());
+-        if (options.getOrDefault("humidity", false)) addDataSetWithAverage(lineData, data, "humidity", "Wilgotność (%)", Color.BLUE, chart.getAxisLeft());
+-        if (options.getOrDefault("apparent", false)) addDataSetWithAverage(lineData, data, "apparent", "Odczuwalna (°C)", Color.MAGENTA, chart.getAxisLeft());
+-        if (options.getOrDefault("precip_prob", false)) addDataSetWithAverage(lineData, data, "precip_prob", "Szansa opadów (%)", Color.CYAN, chart.getAxisLeft());
+-        if (options.getOrDefault("precip", false)) addDataSetWithAverage(lineData, data, "precip", "Opady (mm)", Color.DKGRAY, chart.getAxisLeft());
+-        if (options.getOrDefault("rain", false)) addDataSetWithAverage(lineData, data, "rain", "Deszcz (mm)", Color.BLUE, chart.getAxisLeft());
+-        if (options.getOrDefault("snow", false)) addDataSetWithAverage(lineData, data, "snow", "Śnieg (cm)", Color.LTGRAY, chart.getAxisLeft());
+-        if (options.getOrDefault("pressure", false)) addDataSetWithAverage(lineData, data, "pressure", "Ciśnienie (hPa)", Color.GREEN, chart.getAxisRight());
+-        if (options.getOrDefault("cloud", false)) addDataSetWithAverage(lineData, data, "cloud", "Chmury (%)", Color.GRAY, chart.getAxisLeft());
+-        if (options.getOrDefault("visibility", false)) addDataSetWithAverage(lineData, data, "visibility", "Widoczność (km)", Color.YELLOW, chart.getAxisLeft());
+-        if (options.getOrDefault("wind", false)) addDataSetWithAverage(lineData, data, "wind", "Wiatr (km/h)", Color.parseColor("#FF8800"), chart.getAxisLeft());
++        // Dodajemy serie danych i od razu obliczamy średnią
++        if (options.getOrDefault("temp", false))
++            addDataSetWithAverage(lineData, data, "temp", "Temp (°C)", Color.RED, chart.getAxisLeft());
++
++        if (options.getOrDefault("humidity", false))
++            addDataSetWithAverage(lineData, data, "humidity", "Wilgotność (%)", Color.BLUE, chart.getAxisLeft());
++
++        if (options.getOrDefault("apparent", false))
++            addDataSetWithAverage(lineData, data, "apparent", "Odczuwalna (°C)", Color.MAGENTA, chart.getAxisLeft());
++
++        if (options.getOrDefault("precip_prob", false))
++            addDataSetWithAverage(lineData, data, "precip_prob", "Szansa opadów (%)", Color.CYAN, chart.getAxisLeft());
++
++        if (options.getOrDefault("precip", false))
++            addDataSetWithAverage(lineData, data, "precip", "Opady (mm)", Color.DKGRAY, chart.getAxisLeft());
++
++        if (options.getOrDefault("rain", false))
++            addDataSetWithAverage(lineData, data, "rain", "Deszcz (mm)", Color.BLUE, chart.getAxisLeft());
++
++        if (options.getOrDefault("snow", false))
++            addDataSetWithAverage(lineData, data, "snow", "Śnieg (cm)", Color.LTGRAY, chart.getAxisLeft());
++
++        if (options.getOrDefault("pressure", false))
++            addDataSetWithAverage(lineData, data, "pressure", "Ciśnienie (hPa)", Color.GREEN, chart.getAxisRight());
++
++        if (options.getOrDefault("cloud", false))
++            addDataSetWithAverage(lineData, data, "cloud", "Chmury (%)", Color.GRAY, chart.getAxisLeft());
++
++        if (options.getOrDefault("visibility", false))
++            addDataSetWithAverage(lineData, data, "visibility", "Widoczność (km)", Color.YELLOW, chart.getAxisLeft());
++
++        if (options.getOrDefault("wind", false))
++            addDataSetWithAverage(lineData, data, "wind", "Wiatr (km/h)", Color.parseColor("#FF8800"), chart.getAxisLeft());
+ 
+         chart.setData(lineData);
+         chart.animateX(800);
+         chart.invalidate();
+     }
+ 
++    // Metoda pomocnicza do tworzenia Datasetu i dodawania linii średniej
+     private void addDataSetWithAverage(LineData lineData, List<WeatherDataPoint> data, String type, String label, int color, YAxis axis) {
+         LineDataSet set = createDataSet(data, type, label, color);
+         lineData.addDataSet(set);
+ 
++        // Obliczanie średniej
+         float sum = 0;
+         int count = 0;
+-        for (Entry e : set.getValues()) { sum += e.getY(); count++; }
++        for (Entry e : set.getValues()) {
++            sum += e.getY();
++            count++;
++        }
++
+         if (count > 0) {
+             float avg = sum / count;
++
++            // POPRAWKA: Linia przerywana (średnia)
+             LimitLine ll = new LimitLine(avg, "Śr: " + String.format("%.1f", avg));
+             ll.setLineColor(color);
+             ll.setLineWidth(1f);
+             ll.enableDashedLine(10f, 10f, 0f);
+             ll.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
+             ll.setTextSize(10f);
+-            ll.setTextColor(color);
++            ll.setTextColor(color); // Tekst w kolorze linii
++
+             axis.addLimitLine(ll);
+         }
+     }
+@@ -244,41 +262,111 @@
+         set.setDrawValues(false);
+         set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+ 
+-        if (type.equals("pressure")) set.setAxisDependency(YAxis.AxisDependency.RIGHT);
+-        else set.setAxisDependency(YAxis.AxisDependency.LEFT);
+-
++        if (type.equals("pressure")) {
++            set.setAxisDependency(YAxis.AxisDependency.RIGHT);
++        } else {
++            set.setAxisDependency(YAxis.AxisDependency.LEFT);
++        }
+         return set;
+     }
+ 
+     private void configureChartAppearance() {
+-        chart.setNoDataText("Kliknij Aktualizuj, aby zobaczyć wykres");
++        chart.setNoDataText("Wybierz parametry i kliknij Aktualizuj");
+         Description desc = new Description();
+         desc.setText("");
+         chart.setDescription(desc);
+-        chart.setBackgroundColor(Color.WHITE);
++
++        // POPRAWKA: Tło i kolory (dla trybu ciemnego)
++        chart.setBackgroundColor(Color.WHITE); // Wymuszenie białego tła wykresu
+         chart.setDrawGridBackground(false);
+ 
++        // Oś X z datami
+         XAxis xAxis = chart.getXAxis();
+         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+         xAxis.setTextColor(Color.BLACK);
+         xAxis.setDrawGridLines(false);
++
++        // Formatter do zamiany indeksu na datę/godzinę
+         xAxis.setValueFormatter(new ValueFormatter() {
+             @Override
+             public String getAxisLabel(float value, AxisBase axis) {
+                 int index = (int) value;
+                 if (index >= 0 && index < currentDataList.size()) {
++                    String rawTime = currentDataList.get(index).time;
++                    // Format rawTime: 2023-10-27T14:00
+                     try {
+-                        LocalDateTime ldt = LocalDateTime.parse(currentDataList.get(index).time, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
++                        LocalDateTime ldt = LocalDateTime.parse(rawTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
++                        // Zwracamy np. "27.10 14:00"
+                         return ldt.format(DateTimeFormatter.ofPattern("dd.MM HH:mm"));
+-                    } catch (Exception e) { return ""; }
++                    } catch (Exception e) {
++                        return rawTime;
++                    }
+                 }
+                 return "";
+             }
+         });
+-        xAxis.setLabelRotationAngle(-45);
++        xAxis.setLabelRotationAngle(-45); // Obrót napisów żeby się mieściły
++
++        YAxis leftAxis = chart.getAxisLeft();
++        leftAxis.setDrawGridLines(true);
++        leftAxis.setTextColor(Color.BLACK);
+ 
+-        chart.getAxisLeft().setTextColor(Color.BLACK);
+-        chart.getAxisRight().setTextColor(Color.BLACK);
++        YAxis rightAxis = chart.getAxisRight();
++        rightAxis.setEnabled(true);
++        rightAxis.setDrawGridLines(false);
++        rightAxis.setTextColor(Color.BLACK);
++
+         chart.getLegend().setTextColor(Color.BLACK);
+     }
++
++    private void saveChartToGallery() {
++        // pobranie wykresu
++        Bitmap bitmap = chart.getChartBitmap();
++
++        String filename = "WykresPogody_" + System.currentTimeMillis() + ".png";
++        OutputStream fos;
++
++        try {
++            // dla nowych androiów
++            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
++                ContentValues resolver = new ContentValues();
++                resolver.put(MediaStore.Images.Media.DISPLAY_NAME, filename);
++                resolver.put(MediaStore.Images.Media.MIME_TYPE, "image/png");
++                resolver.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + "/WeatherApp");
++                resolver.put(MediaStore.Images.Media.IS_PENDING, 1);
++
++                Uri imageUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, resolver);
++                fos = getContentResolver().openOutputStream(imageUri);
++
++                // zapis
++                bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
++                fos.close();
++
++                resolver.clear();
++                resolver.put(MediaStore.Images.Media.IS_PENDING, 0);
++                getContentResolver().update(imageUri, resolver, null, null);
++
++                Toast.makeText(this, "Zapisano w folderze Obrazy/WeatherApp", Toast.LENGTH_LONG).show();
++
++            } else {
++                // dla starszych Androidów (< 10)
++                String imagesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();
++                String savedImageURL = MediaStore.Images.Media.insertImage(
++                        getContentResolver(),
++                        bitmap,
++                        filename,
++                        "Wykres wygenerowany przez aplikację pogodową"
++                );
++
++                if (savedImageURL != null) {
++                    Toast.makeText(this, "Zapisano wykres w Galerii", Toast.LENGTH_LONG).show();
++                } else {
++                    Toast.makeText(this, "Błąd zapisu (sprawdź uprawnienia)", Toast.LENGTH_SHORT).show();
++                }
++            }
++        } catch (IOException e) {
++            e.printStackTrace();
++            Toast.makeText(this, "Błąd zapisu: " + e.getMessage(), Toast.LENGTH_SHORT).show();
++        }
++    }
+ }
+\ No newline at end of file
+Index: app/src/main/res/layout/fragment_weather_settings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"wrap_content\"\r\n    android:orientation=\"vertical\"\r\n    android:padding=\"16dp\"\r\n    android:background=\"#E3F2FD\">\r\n\r\n    <TextView\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"Parametry Prognozy\"\r\n        android:textStyle=\"bold\"\r\n        android:textSize=\"18sp\"\r\n        android:layout_marginBottom=\"8dp\"/>\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:orientation=\"horizontal\"\r\n        android:gravity=\"center_vertical\"\r\n        android:layout_marginBottom=\"10dp\">\r\n\r\n        <TextView\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"Liczba dni (1-16): \"/>\r\n\r\n        <EditText\r\n            android:id=\"@+id/et_days\"\r\n            android:layout_width=\"60dp\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:inputType=\"number\"\r\n            android:text=\"1\"\r\n            android:gravity=\"center\"/>\r\n    </LinearLayout>\r\n\r\n    <TextView\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"Wybierz dane do wyświetlenia:\"\r\n        android:textStyle=\"italic\"\r\n        android:layout_marginBottom=\"5dp\"/>\r\n\r\n    <ScrollView\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"150dp\"\r\n        android:background=\"#FFFFFF\"\r\n        android:padding=\"5dp\">\r\n\r\n        <LinearLayout\r\n            android:id=\"@+id/checkbox_container\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:orientation=\"vertical\">\r\n\r\n            <CheckBox\r\n                android:id=\"@+id/cb_temp\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"Temperatura (2m)\"\r\n                android:checked=\"true\"/>\r\n\r\n            <CheckBox\r\n                android:id=\"@+id/cb_humidity\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"Wilgotność\" />\r\n\r\n            <CheckBox\r\n                android:id=\"@+id/cb_apparent\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"Temp. odczuwalna\" />\r\n\r\n            <CheckBox\r\n                android:id=\"@+id/cb_precip_prob\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"Prawdopodobieństwo opadów\" />\r\n\r\n            <CheckBox\r\n                android:id=\"@+id/cb_precip\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"Opady (suma)\" />\r\n\r\n            <CheckBox\r\n                android:id=\"@+id/cb_rain\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"Deszcz\" />\r\n\r\n            <CheckBox\r\n                android:id=\"@+id/cb_snow\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"Opady śniegu\" />\r\n\r\n            <CheckBox\r\n                android:id=\"@+id/cb_pressure\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"Ciśnienie\" />\r\n\r\n            <CheckBox\r\n                android:id=\"@+id/cb_cloud\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"Zachmurzenie\" />\r\n\r\n            <CheckBox\r\n                android:id=\"@+id/cb_visibility\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"Widoczność\" />\r\n\r\n            <CheckBox\r\n                android:id=\"@+id/cb_wind\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"Prędkość wiatru\" />\r\n\r\n        </LinearLayout>\r\n    </ScrollView>\r\n\r\n    <Button\r\n        android:id=\"@+id/btn_apply\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"Aktualizuj Wykres\"\r\n        android:layout_marginTop=\"10dp\"\r\n        android:backgroundTint=\"#2196F3\"/>\r\n\r\n\r\n</LinearLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_weather_settings.xml b/app/src/main/res/layout/fragment_weather_settings.xml
+--- a/app/src/main/res/layout/fragment_weather_settings.xml	(revision feccec500cfbf28b1792c1952811e12cac3ad8cf)
++++ b/app/src/main/res/layout/fragment_weather_settings.xml	(date 1770532168377)
+@@ -3,8 +3,11 @@
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:orientation="vertical"
+-    android:padding="16dp"
+-    android:background="#E3F2FD">
++    android:paddingStart="8dp"
++    android:paddingEnd="8dp"
++    android:paddingBottom="12dp"
++    android:paddingTop="24dp"
++    android:background="#C5D8D1">
+ 
+     <TextView
+         android:layout_width="wrap_content"
+@@ -12,6 +15,7 @@
+         android:text="Parametry Prognozy"
+         android:textStyle="bold"
+         android:textSize="18sp"
++        android:textColor="#12263A"
+         android:layout_marginBottom="8dp"/>
+ 
+     <LinearLayout
+@@ -24,7 +28,8 @@
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+-            android:text="Liczba dni (1-16): "/>
++            android:text="Liczba dni (1-16): "
++            android:textColor="#12263A"/>
+ 
+         <EditText
+             android:id="@+id/et_days"
+@@ -40,19 +45,21 @@
+         android:layout_height="wrap_content"
+         android:text="Wybierz dane do wyświetlenia:"
+         android:textStyle="italic"
++        android:textColor="#12263A"
+         android:layout_marginBottom="5dp"/>
+ 
+-    <ScrollView
++    <androidx.core.widget.NestedScrollView
+         android:layout_width="match_parent"
+         android:layout_height="150dp"
+-        android:background="#FFFFFF"
++        android:background="#F4EDEA"
+         android:padding="5dp">
+ 
+         <LinearLayout
+             android:id="@+id/checkbox_container"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+-            android:orientation="vertical">
++            android:orientation="vertical"
++            android:background="#F4EDEA">
+ 
+             <CheckBox
+                 android:id="@+id/cb_temp"
+@@ -122,7 +129,7 @@
+                 android:text="Prędkość wiatru" />
+ 
+         </LinearLayout>
+-    </ScrollView>
++    </androidx.core.widget.NestedScrollView>
+ 
+     <Button
+         android:id="@+id/btn_apply"
+@@ -130,7 +137,8 @@
+         android:layout_height="wrap_content"
+         android:text="Aktualizuj Wykres"
+         android:layout_marginTop="10dp"
+-        android:backgroundTint="#2196F3"/>
++        android:backgroundTint="#06BCC1"/>
++
+ 
+ 
+ </LinearLayout>
+\ No newline at end of file
+Index: app/src/main/res/layout/activity_map.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<RelativeLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\">\r\n\r\n    <org.osmdroid.views.MapView\r\n        android:id=\"@+id/map\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\" />\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_alignParentBottom=\"true\"\r\n        android:orientation=\"vertical\"\r\n        android:background=\"#DDFEFEDE\"\r\n        android:padding=\"16dp\">\r\n\r\n        <TextView\r\n            android:id=\"@+id/tvSelectedInfo\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"Kliknij na mapę, aby wybrać lokalizację\"\r\n            android:gravity=\"center\"\r\n            android:textStyle=\"bold\"\r\n            android:layout_marginBottom=\"8dp\"/>\r\n\r\n        <Button\r\n            android:id=\"@+id/btnConfirmLocation\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"Zatwierdź wybór\"\r\n            android:textAllCaps=\"false\"\r\n            android:backgroundTint=\"#1976D2\"\r\n            android:enabled=\"false\"/>\r\n    </LinearLayout>\r\n\r\n</RelativeLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_map.xml b/app/src/main/res/layout/activity_map.xml
+--- a/app/src/main/res/layout/activity_map.xml	(revision feccec500cfbf28b1792c1952811e12cac3ad8cf)
++++ b/app/src/main/res/layout/activity_map.xml	(date 1770532378529)
+@@ -1,38 +1,53 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
++<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+-    android:layout_height="match_parent">
++    android:layout_height="match_parent"
++    android:orientation="vertical">
++
++    <TextView
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:background="#C5D8D1"
++        android:gravity="center"
++        android:padding="24dp"
++        android:text="Wybierz miejsce klikając na mapę"
++        android:textAlignment="center"
++        android:textColor="#12263A"
++        android:textSize="18sp"
++        android:textStyle="bold" />
+ 
+     <org.osmdroid.views.MapView
+         android:id="@+id/map"
+         android:layout_width="match_parent"
+-        android:layout_height="match_parent" />
++        android:layout_height="0dp"
++        android:layout_weight="1" />
+ 
+     <LinearLayout
+         android:layout_width="match_parent"
+-        android:layout_height="wrap_content"
+-        android:layout_alignParentBottom="true"
++        android:layout_height="121dp"
++        android:background="#C5D8D1"
++        android:elevation="8dp"
+         android:orientation="vertical"
+-        android:background="#DDFEFEDE"
+         android:padding="16dp">
+ 
+         <TextView
+             android:id="@+id/tvSelectedInfo"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+-            android:text="Kliknij na mapę, aby wybrać lokalizację"
++            android:layout_marginBottom="10dp"
+             android:gravity="center"
+-            android:textStyle="bold"
+-            android:layout_marginBottom="8dp"/>
++            android:text="Nie wybrano miejsca"
++            android:textColor="#12263A"
++            android:textSize="14sp" />
+ 
+         <Button
+             android:id="@+id/btnConfirmLocation"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+-            android:text="Zatwierdź wybór"
+-            android:textAllCaps="false"
+-            android:backgroundTint="#1976D2"
+-            android:enabled="false"/>
++            android:backgroundTint="#06BCC1"
++            android:enabled="false"
++            android:text="ZATWIERDŹ WYBÓR"
++            android:textColor="#12263A" />
+     </LinearLayout>
+ 
+-</RelativeLayout>
+\ No newline at end of file
++</LinearLayout>
+\ No newline at end of file
+Index: app/src/main/res/layout/activity_show_weather.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:orientation=\"vertical\"\r\n    android:padding=\"16dp\"\r\n    android:background=\"#FAFAFA\">\r\n\r\n    <TextView\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"Prognoza pogody\"\r\n        android:textSize=\"24sp\"\r\n        android:textStyle=\"bold\"\r\n        android:layout_marginBottom=\"16dp\"\r\n        android:gravity=\"center\"/>\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:orientation=\"vertical\"\r\n        android:background=\"#EFEFEF\"\r\n        android:padding=\"12dp\"\r\n        android:layout_marginBottom=\"8dp\">\r\n\r\n        <LinearLayout\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:orientation=\"horizontal\"\r\n            android:gravity=\"center_vertical\"\r\n            android:layout_marginBottom=\"8dp\">\r\n\r\n            <TextView\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"Liczba dni (1-16): \"/>\r\n\r\n            <EditText\r\n                android:id=\"@+id/et_days\"\r\n                android:layout_width=\"60dp\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:inputType=\"number\"\r\n                android:text=\"3\"\r\n                android:gravity=\"center\"/>\r\n        </LinearLayout>\r\n\r\n        <Button\r\n            android:id=\"@+id/btn_select_params\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"Wybierz parametry wykresu\"\r\n            android:textAllCaps=\"false\"\r\n            android:backgroundTint=\"#90CAF9\"\r\n            android:textColor=\"#000000\"\r\n            android:layout_marginBottom=\"4dp\"/>\r\n\r\n        <Button\r\n            android:id=\"@+id/btn_update\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"Aktualizuj\"\r\n            android:textAllCaps=\"false\"\r\n            android:backgroundTint=\"#1976D2\"/>\r\n    </LinearLayout>\r\n\r\n    <ScrollView\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\"\r\n        android:fillViewport=\"true\">\r\n\r\n        <LinearLayout\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:orientation=\"vertical\">\r\n\r\n            <TextView\r\n                android:id=\"@+id/tv_warnings\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:background=\"#FFEBEE\"\r\n                android:textColor=\"#D32F2F\"\r\n                android:textStyle=\"bold\"\r\n                android:padding=\"10dp\"\r\n                android:text=\"OSTRZEŻENIA\"\r\n                android:visibility=\"gone\"\r\n                android:layout_marginBottom=\"10dp\"/>\r\n\r\n            <TextView\r\n                android:id=\"@+id/tv_current_weather\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"Pobieranie danych...\"\r\n                android:textSize=\"16sp\"\r\n                android:layout_marginBottom=\"10dp\"/>\r\n\r\n            <com.github.mikephil.charting.charts.LineChart\r\n                android:id=\"@+id/weather_chart\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"400dp\" />\r\n\r\n        </LinearLayout>\r\n    </ScrollView>\r\n</LinearLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_show_weather.xml b/app/src/main/res/layout/activity_show_weather.xml
+--- a/app/src/main/res/layout/activity_show_weather.xml	(revision feccec500cfbf28b1792c1952811e12cac3ad8cf)
++++ b/app/src/main/res/layout/activity_show_weather.xml	(date 1770532378529)
+@@ -1,103 +1,68 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    android:orientation="vertical"
+-    android:padding="16dp"
+-    android:background="#FAFAFA">
+-
+-    <TextView
+-        android:layout_width="match_parent"
+-        android:layout_height="wrap_content"
+-        android:text="Prognoza pogody"
+-        android:textSize="24sp"
+-        android:textStyle="bold"
+-        android:layout_marginBottom="16dp"
+-        android:gravity="center"/>
++    android:fillViewport="true">
+ 
+-    <LinearLayout
+-        android:layout_width="match_parent"
+-        android:layout_height="wrap_content"
+-        android:orientation="vertical"
+-        android:background="#EFEFEF"
+-        android:padding="12dp"
+-        android:layout_marginBottom="8dp">
++        <LinearLayout
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:orientation="vertical"
++            android:padding="16dp"
++            android:background="#F4EDEA">
+ 
+-        <LinearLayout
++        <androidx.fragment.app.FragmentContainerView
++            android:id="@+id/fragment_container"
++            android:name="pl.edu.pw.mini.zpoif.weatherapp.WeatherSettingsFragment"
+             android:layout_width="match_parent"
+-            android:layout_height="wrap_content"
+-            android:orientation="horizontal"
+-            android:gravity="center_vertical"
+-            android:layout_marginBottom="8dp">
+-
+-            <TextView
+-                android:layout_width="wrap_content"
+-                android:layout_height="wrap_content"
+-                android:text="Liczba dni (1-16): "/>
++            android:layout_height="wrap_content" />
+ 
+-            <EditText
+-                android:id="@+id/et_days"
+-                android:layout_width="60dp"
+-                android:layout_height="wrap_content"
+-                android:inputType="number"
+-                android:text="3"
+-                android:gravity="center"/>
+-        </LinearLayout>
+-
+-        <Button
+-            android:id="@+id/btn_select_params"
+-            android:layout_width="match_parent"
+-            android:layout_height="wrap_content"
+-            android:text="Wybierz parametry wykresu"
+-            android:textAllCaps="false"
+-            android:backgroundTint="#90CAF9"
+-            android:textColor="#000000"
+-            android:layout_marginBottom="4dp"/>
+-
+-        <Button
+-            android:id="@+id/btn_update"
++        <androidx.cardview.widget.CardView
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+-            android:text="Aktualizuj"
+-            android:textAllCaps="false"
+-            android:backgroundTint="#1976D2"/>
+-    </LinearLayout>
++            android:layout_margin="10dp"
++            android:elevation="4dp">
+ 
+-    <ScrollView
+-        android:layout_width="match_parent"
+-        android:layout_height="match_parent"
+-        android:fillViewport="true">
+-
+-        <LinearLayout
+-            android:layout_width="match_parent"
+-            android:layout_height="wrap_content"
+-            android:orientation="vertical">
++            <TextView
++                android:id="@+id/tv_current_weather"
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
++                android:padding="16dp"
++                android:text="Wybierz parametry powyżej..."
++                android:textSize="16sp"
++                android:textStyle="bold"
++                android:textColor="#12263A"
++                android:background="#C5D8D1"/>
++        </androidx.cardview.widget.CardView>
++
+ 
+-            <TextView
+-                android:id="@+id/tv_warnings"
+-                android:layout_width="match_parent"
+-                android:layout_height="wrap_content"
+-                android:background="#FFEBEE"
+-                android:textColor="#D32F2F"
+-                android:textStyle="bold"
+-                android:padding="10dp"
+-                android:text="OSTRZEŻENIA"
+-                android:visibility="gone"
+-                android:layout_marginBottom="10dp"/>
++        <TextView
++            android:id="@+id/tv_warnings"
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:background="#FFEBEE"
++            android:padding="10dp"
++            android:textColor="#D32F2F"
++            android:textStyle="bold"
++            android:gravity="center"
++            android:visibility="gone"
++            android:text="OSTRZEŻENIA" />
+ 
+-            <TextView
+-                android:id="@+id/tv_current_weather"
+-                android:layout_width="match_parent"
+-                android:layout_height="wrap_content"
+-                android:text="Pobieranie danych..."
+-                android:textSize="16sp"
+-                android:layout_marginBottom="10dp"/>
++        <Button
++            android:id="@+id/btn_save_chart"
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:text="Zapisz wykres do Galerii"
++            android:layout_marginTop="8dp"
++            android:backgroundTint="#06BCC1"
++            android:textColor="#FFFFFF"/>
++
+ 
+-            <com.github.mikephil.charting.charts.LineChart
+-                android:id="@+id/weather_chart"
+-                android:layout_width="match_parent"
+-                android:layout_height="400dp" />
++        <com.github.mikephil.charting.charts.LineChart
++            android:id="@+id/weather_chart"
++            android:layout_width="match_parent"
++            android:layout_height="300dp"
++            android:layout_margin="10dp"/>
+ 
+-        </LinearLayout>
+-    </ScrollView>
+-</LinearLayout>
+\ No newline at end of file
++    </LinearLayout>
++</androidx.core.widget.NestedScrollView>
+\ No newline at end of file
+Index: app/src/main/res/layout/activity_compare_weather.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<ScrollView xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:padding=\"16dp\"\r\n    android:background=\"#FAFAFA\">\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:orientation=\"vertical\">\r\n\r\n        <TextView\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"Porównywarka\"\r\n            android:textSize=\"24sp\"\r\n            android:textStyle=\"bold\"\r\n            android:layout_marginBottom=\"16dp\"\r\n            android:gravity=\"center\"/>\r\n\r\n        <LinearLayout\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:orientation=\"horizontal\">\r\n\r\n            <EditText\r\n                android:id=\"@+id/etCity1\"\r\n                android:layout_width=\"0dp\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_weight=\"1\"\r\n                android:hint=\"Miasto 1\" />\r\n\r\n            <EditText\r\n                android:id=\"@+id/etCity2\"\r\n                android:layout_width=\"0dp\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_weight=\"1\"\r\n                android:hint=\"Miasto 2\"\r\n                android:layout_marginStart=\"8dp\"/>\r\n        </LinearLayout>\r\n\r\n        <Button\r\n            android:id=\"@+id/btnSelectParams\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"Wybierz parametry do porównania\"\r\n            android:textAllCaps=\"false\"\r\n            android:layout_marginTop=\"8dp\"\r\n            android:backgroundTint=\"#90CAF9\"\r\n            android:textColor=\"#000000\"/>\r\n\r\n        <Button\r\n            android:id=\"@+id/btnCompare\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"Porównaj\"\r\n            android:textAllCaps=\"false\"\r\n            android:backgroundTint=\"#1976D2\"\r\n            android:layout_marginTop=\"8dp\"/>\r\n\r\n        <LinearLayout\r\n            android:id=\"@+id/resultsContainer\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:orientation=\"vertical\"\r\n            android:visibility=\"gone\"\r\n            android:layout_marginTop=\"16dp\">\r\n\r\n            <LinearLayout\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:orientation=\"horizontal\"\r\n                android:baselineAligned=\"false\">\r\n\r\n                <LinearLayout\r\n                    android:layout_width=\"0dp\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:layout_weight=\"1\"\r\n                    android:orientation=\"vertical\"\r\n                    android:background=\"#F5F5F5\"\r\n                    android:padding=\"8dp\">\r\n\r\n                    <TextView android:id=\"@+id/tvName1\" android:layout_width=\"match_parent\" android:layout_height=\"wrap_content\" android:textStyle=\"bold\" android:gravity=\"center\" android:textSize=\"18sp\"/>\r\n                    <TextView android:layout_width=\"wrap_content\" android:layout_height=\"wrap_content\" android:text=\"Temp:\" android:textSize=\"12sp\"/>\r\n                    <TextView android:id=\"@+id/tvTemp1\" android:layout_width=\"wrap_content\" android:layout_height=\"wrap_content\" android:textSize=\"20sp\" android:textStyle=\"bold\"/>\r\n                    <TextView android:layout_width=\"wrap_content\" android:layout_height=\"wrap_content\" android:text=\"Wiatr:\" android:textSize=\"12sp\" android:layout_marginTop=\"4dp\"/>\r\n                    <TextView android:id=\"@+id/tvWind1\" android:layout_width=\"wrap_content\" android:layout_height=\"wrap_content\"/>\r\n                    <TextView android:layout_width=\"wrap_content\" android:layout_height=\"wrap_content\" android:text=\"Szansa deszczu:\" android:textSize=\"12sp\" android:layout_marginTop=\"4dp\"/>\r\n                    <TextView android:id=\"@+id/tvRain1\" android:layout_width=\"wrap_content\" android:layout_height=\"wrap_content\"/>\r\n                </LinearLayout>\r\n\r\n                <View android:layout_width=\"16dp\" android:layout_height=\"1dp\"/>\r\n\r\n                <LinearLayout\r\n                    android:layout_width=\"0dp\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:layout_weight=\"1\"\r\n                    android:orientation=\"vertical\"\r\n                    android:background=\"#F5F5F5\"\r\n                    android:padding=\"8dp\">\r\n\r\n                    <TextView android:id=\"@+id/tvName2\" android:layout_width=\"match_parent\" android:layout_height=\"wrap_content\" android:textStyle=\"bold\" android:gravity=\"center\" android:textSize=\"18sp\"/>\r\n                    <TextView android:layout_width=\"wrap_content\" android:layout_height=\"wrap_content\" android:text=\"Temp:\" android:textSize=\"12sp\"/>\r\n                    <TextView android:id=\"@+id/tvTemp2\" android:layout_width=\"wrap_content\" android:layout_height=\"wrap_content\" android:textSize=\"20sp\" android:textStyle=\"bold\"/>\r\n                    <TextView android:layout_width=\"wrap_content\" android:layout_height=\"wrap_content\" android:text=\"Wiatr:\" android:textSize=\"12sp\" android:layout_marginTop=\"4dp\"/>\r\n                    <TextView android:id=\"@+id/tvWind2\" android:layout_width=\"wrap_content\" android:layout_height=\"wrap_content\"/>\r\n                    <TextView android:layout_width=\"wrap_content\" android:layout_height=\"wrap_content\" android:text=\"Szansa deszczu:\" android:textSize=\"12sp\" android:layout_marginTop=\"4dp\"/>\r\n                    <TextView android:id=\"@+id/tvRain2\" android:layout_width=\"wrap_content\" android:layout_height=\"wrap_content\"/>\r\n                </LinearLayout>\r\n            </LinearLayout>\r\n\r\n            <TextView\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"Szczegółowe porównanie (aktualna godzina):\"\r\n                android:textStyle=\"bold\"\r\n                android:layout_marginTop=\"20dp\"\r\n                android:layout_marginBottom=\"10dp\"/>\r\n\r\n            <TableLayout\r\n                android:id=\"@+id/comparisonTable\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:stretchColumns=\"1,2\"\r\n                android:background=\"#FFFFFF\"\r\n                android:padding=\"5dp\">\r\n            </TableLayout>\r\n\r\n        </LinearLayout>\r\n    </LinearLayout>\r\n</ScrollView>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_compare_weather.xml b/app/src/main/res/layout/activity_compare_weather.xml
+--- a/app/src/main/res/layout/activity_compare_weather.xml	(revision feccec500cfbf28b1792c1952811e12cac3ad8cf)
++++ b/app/src/main/res/layout/activity_compare_weather.xml	(date 1770532378527)
+@@ -2,8 +2,11 @@
+ <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    android:padding="16dp"
+-    android:background="#FAFAFA">
++    android:paddingStart="24dp"
++    android:paddingEnd="24dp"
++    android:paddingBottom="24dp"
++    android:paddingTop="80dp"
++    android:background="#F4EDEA">
+ 
+     <LinearLayout
+         android:layout_width="match_parent"
+@@ -13,11 +16,12 @@
+         <TextView
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
++            android:layout_marginBottom="16dp"
++            android:gravity="center"
+             android:text="Porównywarka"
++            android:textColor="#12263A"
+             android:textSize="24sp"
+-            android:textStyle="bold"
+-            android:layout_marginBottom="16dp"
+-            android:gravity="center"/>
++            android:textStyle="bold" />
+ 
+         <LinearLayout
+             android:layout_width="match_parent"
+@@ -44,20 +48,17 @@
+             android:id="@+id/btnSelectParams"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+-            android:text="Wybierz parametry do porównania"
+-            android:textAllCaps="false"
+             android:layout_marginTop="8dp"
+-            android:backgroundTint="#90CAF9"
+-            android:textColor="#000000"/>
++            android:backgroundTint="#06BCC1"
++            android:text="Wybierz parametry do porównania" />
+ 
+         <Button
+             android:id="@+id/btnCompare"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+-            android:text="Porównaj"
+-            android:textAllCaps="false"
+-            android:backgroundTint="#1976D2"
+-            android:layout_marginTop="8dp"/>
++            android:text="PORÓWNAJ"
++            android:layout_marginTop="8dp"
++            android:backgroundTint="#9C89B8"/>
+ 
+         <LinearLayout
+             android:id="@+id/resultsContainer"
+@@ -113,7 +114,7 @@
+             <TextView
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+-                android:text="Szczegółowe porównanie (aktualna godzina):"
++                android:text="Szczegółowe porównanie (Aktualna godzina):"
+                 android:textStyle="bold"
+                 android:layout_marginTop="20dp"
+                 android:layout_marginBottom="10dp"/>
+Index: .idea/deploymentTargetSelector.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"deploymentTargetSelector\">\r\n    <selectionStates>\r\n      <SelectionState runConfigName=\"app\">\r\n        <option name=\"selectionMode\" value=\"DROPDOWN\" />\r\n      </SelectionState>\r\n    </selectionStates>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/deploymentTargetSelector.xml b/.idea/deploymentTargetSelector.xml
+--- a/.idea/deploymentTargetSelector.xml	(revision feccec500cfbf28b1792c1952811e12cac3ad8cf)
++++ b/.idea/deploymentTargetSelector.xml	(date 1770532168362)
+@@ -4,6 +4,14 @@
+     <selectionStates>
+       <SelectionState runConfigName="app">
+         <option name="selectionMode" value="DROPDOWN" />
++        <DropdownSelection timestamp="2026-02-07T21:48:38.671156100Z">
++          <Target type="DEFAULT_BOOT">
++            <handle>
++              <DeviceId pluginId="PhysicalDevice" identifier="serial=RZCT406YARR" />
++            </handle>
++          </Target>
++        </DropdownSelection>
++        <DialogSelection />
+       </SelectionState>
+     </selectionStates>
+   </component>
