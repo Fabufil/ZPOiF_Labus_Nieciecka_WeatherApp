@@ -60,21 +60,18 @@ public class ShowWeatherActivity extends AppCompatActivity {
 
     private List<WeatherDataPoint> currentDataList = new ArrayList<>();
 
-    // Definicje parametrów (identyczne jak w CompareWeatherActivity)
     private final String[] parameterNames = {
-            "Temperatura", "Wilgotność", "Odczuwalna",
-            "Szansa opadów", "Opady (mm)", "Deszcz (mm)",
-            "Śnieg (cm)", "Ciśnienie", "Chmury",
+            "Temperatura", "Wilgotność", "Temperatura odczuwalna",
+            "Szansa opadów", "Opady", "Deszcz",
+            "Śnieg", "Ciśnienie", "Chmury",
             "Widoczność", "Wiatr"
     };
-    // Klucze mapowania do logiki rysowania
     private final String[] parameterKeys = {
             "temp", "humidity", "apparent",
             "precip_prob", "precip", "rain",
             "snow", "pressure", "cloud",
             "visibility", "wind"
     };
-    // Domyślne zaznaczenie (Temperatura i Wilgotność)
     private boolean[] selectedParameters = {true, true, false, false, false, false, false, false, false, false, false};
 
 
@@ -89,7 +86,7 @@ public class ShowWeatherActivity extends AppCompatActivity {
         chart = findViewById(R.id.weather_chart);
         btnSaveChart = findViewById(R.id.btn_save_chart);
 
-        // Inicjalizacja nowych przycisków
+
         etDays = findViewById(R.id.et_days);
         btnSelectParams = findViewById(R.id.btn_select_params);
         btnUpdate = findViewById(R.id.btn_update);
@@ -101,10 +98,10 @@ public class ShowWeatherActivity extends AppCompatActivity {
 
         configureChartAppearance();
 
-        // 1. Obsługa przycisku wyboru parametrów (Dialog)
+        // przycisk wyboru
         btnSelectParams.setOnClickListener(v -> showParameterSelectionDialog());
 
-        // 2. Obsługa przycisku Aktualizuj
+        // przycisk aktualizacji
         btnUpdate.setOnClickListener(v -> {
             String daysStr = etDays.getText().toString();
             if(daysStr.isEmpty()) return;
@@ -115,7 +112,7 @@ public class ShowWeatherActivity extends AppCompatActivity {
             fetchAndDisplayData(days);
         });
 
-        // 3. Obsługa zapisu (Twoja metoda)
+        // zapis
         btnSaveChart.setOnClickListener(v -> {
             if (chart.getData() != null && chart.getData().getDataSetCount() > 0) {
                 saveChartToGallery();
@@ -157,7 +154,7 @@ public class ShowWeatherActivity extends AppCompatActivity {
                             updateCurrentWeatherText(data.get(currentHourIndex));
                         }
 
-                        // Konwersja tablicy boolean[] na Mapę dla metody updateChart
+
                         Map<String, Boolean> optionsMap = new HashMap<>();
                         for(int i=0; i<selectedParameters.length; i++) {
                             optionsMap.put(parameterKeys[i], selectedParameters[i]);
@@ -179,7 +176,10 @@ public class ShowWeatherActivity extends AppCompatActivity {
     }
 
     private int getCurrentHourIndex(List<WeatherDataPoint> data) {
-        int hour = LocalTime.now().getHour();
+        int hour = 0;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            hour = LocalTime.now().getHour();
+        }
         return Math.min(hour, data.size() - 1);
     }
 
@@ -311,8 +311,13 @@ public class ShowWeatherActivity extends AppCompatActivity {
                 if (index >= 0 && index < currentDataList.size()) {
                     String rawTime = currentDataList.get(index).time;
                     try {
-                        LocalDateTime ldt = LocalDateTime.parse(rawTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-                        return ldt.format(DateTimeFormatter.ofPattern("dd.MM HH:mm"));
+                        LocalDateTime ldt = null;
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            ldt = LocalDateTime.parse(rawTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+                        }
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            return ldt.format(DateTimeFormatter.ofPattern("dd.MM HH:mm"));
+                        }
                     } catch (Exception e) {
                         return rawTime;
                     }

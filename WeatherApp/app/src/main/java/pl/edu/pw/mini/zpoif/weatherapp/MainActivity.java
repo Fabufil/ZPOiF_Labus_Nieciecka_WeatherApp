@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         btnOpenMap = findViewById(R.id.btnOpenMap);
         btnOpenCompare = findViewById(R.id.btnOpenCompare);
 
-        // 1. Logika szukania po nazwie miasta
+        // szukanie po nazwie miasta
         btnSearchCity.setOnClickListener(v -> {
             String city = etCityName.getText().toString().trim();
             if (!city.isEmpty()) {
@@ -40,13 +40,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // 2. Przejście do mapy
+        // Przejście do mapy
         btnOpenMap.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, MapActivity.class);
             startActivity(intent);
         });
 
-        // 3. Przejście do porównywarki
+        // przejście do porównania
         btnOpenCompare.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, CompareWeatherActivity.class);
             startActivity(intent);
@@ -62,10 +62,10 @@ public class MainActivity extends AppCompatActivity {
 
         executor.execute(() -> {
             try {
-                // Pobieramy string postaci "latitude=XX.XX&longitude=YY.YY"
+
                 String coordsQuery = WeatherGetter.getCoordinates(cityName);
 
-                // Musimy to sparsować, bo ShowWeatherActivity oczekuje double
+
                 double lat = 0;
                 double lon = 0;
 
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
                     btnSearchCity.setEnabled(true);
                     btnSearchCity.setText("SPRAWDŹ POGODĘ");
 
-                    // Uruchamiamy ShowWeatherActivity
+                    // ShowWeatherActivity
                     Intent intent = new Intent(MainActivity.this, ShowWeatherActivity.class);
                     intent.putExtra("LATITUDE", finalLat);
                     intent.putExtra("LONGITUDE", finalLon);

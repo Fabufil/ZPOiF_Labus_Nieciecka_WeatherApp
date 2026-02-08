@@ -19,47 +19,47 @@ public class WarningGenerator {
         boolean isFoggy = false;
 
 
-        // Analizujemy pierwsze 24h
+
         int count = Math.min(data.size(), 24);
 
         for (int i = 0; i < count; i++) {
             WeatherDataPoint point = data.get(i);
 
-            // 1. upał
+            // upał
             if (point.temperature > 30.0) isHot = true;
 
-            // 2. mróz
+            // mróz
             if (point.temperature < -10.0) isFreezing = true;
 
-            // 3. ślisko
+            // ślisko
             if (point.temperature <= 2.0 && point.temperature >= -3.0 && point.rain > 0.0) {
                 isSlippery = true;
             }
 
-            // 4. silny wiatr
+            // silny wiatr
             if (point.windSpeed > 25.0) isWindy = true;
 
-            // 5. burza
+            // burza
             if (point.rain > 2.0 || (point.visibility < 200 && point.visibility > 0)) {
                 isStormy = true;
             }
 
-            // 6. śnieżyca
+            // śnieżyca
             if (point.snowfall > 0.5) {
                 isSnowing = true;
             }
 
-            // 7. deszcz
+            //  deszcz
             if (point.precipitationProbability > 80) {
                 isRaining = true;
             }
 
-            // 8. spadek cisnienia
+            //  niskie ciśnienie
             if (point.surfacePressure < 990.0) {
                 isLowPressure = true;
             }
 
-            // 9. mgła
+            // mgła
             if (point.visibility < 300.0 && point.windSpeed < 10.0) {
                 isFoggy = true;
             }
@@ -73,7 +73,7 @@ public class WarningGenerator {
         if (isStormy) warnings.add("UWAGA: Trudne warunki (ulewa/mgła)!");
         if (isSnowing) warnings.add("UWAGA: Opady śniegu!");
         if (isRaining) warnings.add("UWAGA: Opady deszczu - weź parasol!");
-        if (isLowPressure) warnings.add("UWAGA: Spadek cisnienia!");
+        if (isLowPressure) warnings.add("UWAGA: Niskie ciśnienie!");
         if (isFoggy) warnings.add("UWAGA: Mgla!");
         return warnings;
     }

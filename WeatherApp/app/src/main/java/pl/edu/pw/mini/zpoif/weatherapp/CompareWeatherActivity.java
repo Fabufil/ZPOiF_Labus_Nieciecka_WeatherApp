@@ -3,6 +3,7 @@ package pl.edu.pw.mini.zpoif.weatherapp;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -31,15 +32,14 @@ public class CompareWeatherActivity extends AppCompatActivity {
     // Pola tekstowe podstawowe
     private TextView tvName1, tvTemp1, tvWind1, tvRain1;
     private TextView tvName2, tvTemp2, tvWind2, tvRain2;
-    // USUNIĘTO: private TextView tvSummary;
 
     private View resultsContainer;
     private TableLayout comparisonTable;
 
     // Lista dostępnych parametrów do porównania
     private final String[] parameterNames = {
-            "Temperatura", "Wilgotność", "Odczuwalna",
-            "Wiatr", "Szansa opadów", "Opady (mm)",
+            "Temperatura", "Wilgotność", "Temperatura odczuwalna",
+            "Wiatr", "Szansa opadów", "Opady",
             "Ciśnienie", "Widoczność", "Chmury"
     };
     // Domyślnie wybrane
@@ -56,7 +56,6 @@ public class CompareWeatherActivity extends AppCompatActivity {
         btnSelectParams = findViewById(R.id.btnSelectParams);
 
         resultsContainer = findViewById(R.id.resultsContainer);
-        // USUNIĘTO: tvSummary = findViewById(R.id.tvSummary);
         comparisonTable = findViewById(R.id.comparisonTable);
 
         tvName1 = findViewById(R.id.tvName1);
@@ -114,7 +113,10 @@ public class CompareWeatherActivity extends AppCompatActivity {
 
                 if (data1.isEmpty() || data2.isEmpty()) throw new Exception("Brak danych.");
 
-                int hour = Math.min(LocalTime.now().getHour(), data1.size() - 1);
+                int hour = 0;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    hour = Math.min(LocalTime.now().getHour(), data1.size() - 1);
+                }
 
                 WeatherDataPoint p1 = data1.get(hour);
                 WeatherDataPoint p2 = data2.get(hour);

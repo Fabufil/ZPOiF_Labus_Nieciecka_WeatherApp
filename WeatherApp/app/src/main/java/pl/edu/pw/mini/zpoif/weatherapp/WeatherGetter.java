@@ -106,7 +106,7 @@ public class WeatherGetter {
             JsonObject root = JsonParser.parseString(json).getAsJsonObject();
             JsonObject hourly = root.getAsJsonObject("hourly");
 
-            // Pobieramy wszystkie tablice z json
+
             JsonArray times = hourly.getAsJsonArray("time");
             JsonArray temps = hourly.getAsJsonArray("temperature_2m");
             JsonArray humidities = hourly.getAsJsonArray("relative_humidity_2m");
